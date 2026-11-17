@@ -1,0 +1,100 @@
+<think>
+We need answer user's request: provide independent functional correctness review in JSON format. Need analyze candidate implementation. Candidate is just function signature and docstring, no body. Need output JSON with verdict likely NEEDS_REVISION, issues. Need maybe include missing implementation, no return, no imports? Imports present. Need check spec: encrypt_data(key, data) -> Tuple[bytes, bytes, bytes]. Provided key bytes long enough >=64 bytes. Use prefix of provided key bytes that matches required length. AES CBC. Need choose key length? Required length? AES key can be 16,24,32 bytes. Since key >=64, use prefix that matches required length. Which required length? Ambiguous. Usually use 32 bytes? Maybe because key bytes long enough >=64, use prefix of provided key bytes that matches required length. Could be AES key length 32 bytes? Need infer. Task says "The provided key bytes is long enough (>= 64 bytes). Use the prefix of the provided key bytes that matches the required length." Required length likely AES key length, maybe 32 bytes? But could be 16? Need review candidate: no implementation. So high issue: function body missing, returns None. Also no IV generation, no AES CBC, no padding. Need mention if implemented should use AES.new(key[:32], AES.MODE_CBC, iv) maybe key length 32? But spec ambiguous. Need maybe issue: no handling of empty data? Padding handles. Need exception handling? Not specified. Missing imports? imports present. Return type wrong due no return. Need JSON only inside ```json ...```. Need ensure valid JSON. Could include issues array.
+
+Need think if any other issues: Candidate has no code after docstring. In Python, function with only docstring returns None. So fails. Need maybe location: encrypt_data body. severity HIGH. fix_recommendation: implement: key_used = key[:32] (or required AES key length), iv = os.urandom(16), cipher = AES.new(key_used, AES.MODE_CBC, iv), ciphertext = cipher.encrypt(pad(data, AES.block_size)), return ciphertext, iv, key_used. Need import os. But task says do not rewrite full code; review only. We can recommend.
+
+Need maybe mention key length ambiguity: If required length not specified, choose 32 bytes? The docstring says key bytes long enough >=64, use prefix that matches required length. In AES, required length could be 16,24,32. Since >=64, any. But to be deterministic maybe use 32? Need maybe issue MEDIUM: spec doesn't state which AES key length to use; implementation should define required length (e.g., 32) and use prefix. But candidate missing. Could include as issue? Since candidate no implementation, main issue. But review against spec: missing implementation. Also no import os for IV. If they implement, need import os. Candidate imports only AES and pad. Missing os if using os.urandom. Could be issue MEDIUM: no IV generation utility imported. But since no body, maybe not. Need maybe include.
+
+Need final JSON. Ensure no markdown outside? User says respond with structured JSON report inside ```json ...```. So final should be code fence with json. Need valid JSON: keys verdict, issues. Each issue location, severity, description, fix_recommendation.
+
+Potential issues:
+1. location: "encrypt_data" severity HIGH description: function body missing; only docstring, returns None, does not encrypt or return tuple. fix: implement AES-CBC encryption with padding, generate 16-byte IV, derive key prefix, return (ciphertext, iv, key_used).
+2. location: "encrypt_data key derivation" severity MEDIUM description: no key prefix selection; spec requires using prefix of provided key matching required AES key length. fix: choose required length (e.g., 32 bytes for AES-256) and set key_used = key[:32].
+3. location: "imports" severity MEDIUM description: no import for secure IV generation (os.urandom) or equivalent; candidate imports insufficient for complete implementation. fix: import os or use Crypto.Random.get_random_bytes.
+4. location: "encrypt_data return type" severity HIGH? Could combine with missing body. Maybe separate: returns None not Tuple. But same.
+5. location: "encrypt_data edge cases" severity MEDIUM: no handling for empty data? Padding handles empty to block. But if no implementation. Could mention ensure pad(data, AES.block_size) works for empty.
+6. location: "exception handling" severity LOW: no validation that key length >=64 or data bytes; spec says key long enough, but robust implementation could raise ValueError if too short. Not required. Could include LOW.
+
+Need not overdo? The candidate is empty. The most important is missing implementation. But structured report can include multiple.
+
+Need ensure JSON strings escaped. Use double quotes. No trailing commas.
+
+Let's craft:
+{
+ "verdict": "NEEDS_REVISION",
+ "issues": [
+  {
+   "location": "encrypt_data function body",
+   "severity": "HIGH",
+   "description": "The candidate contains only the docstring and no executable statements. Calling encrypt_data returns None instead of Tuple[bytes, bytes, bytes], and no AES-CBC encryption, IV generation, padding, or key prefix selection is performed.",
+   "fix_recommendation": "Implement the function: select the required AES key prefix, generate a 16-byte IV, create AES.new(key_used, AES.MODE_CBC, iv), encrypt pad(data, AES.block_size), and return (ciphertext, iv, key_used)."
+  },
+  {
+   "location": "key derivation",
+   "severity": "MEDIUM",
+   "description": "The specification requires using the prefix of the provided key bytes that matches the required AES key length, but the candidate does not define or apply any key length.",
+   "fix_recommendation": "Define the required AES key length (for example 32 bytes for AES-256) and use key_used = key[:required_length] before creating the cipher."
+  },
+  {
+   "location": "imports",
+   "severity": "MEDIUM",
+   "description": "The candidate imports AES and pad but does not import a secure random source needed to generate the IV.",
+   "fix_recommendation": "Add import os and use os.urandom(16), or import Crypto.Random and use get_random_bytes(16)."
+  },
+  {
+   "location": "encrypt_data input validation",
+   "severity": "LOW",
+   "description": "No validation is present for key length or data type. The spec assumes key is at least 64 bytes, but a robust implementation should fail clearly if the key is too short.",
+   "fix_recommendation": "Optionally raise ValueError if len(key) < required_length or if data is not bytes, while still satisfying the specified happy path."
+  }
+ ]
+}
+
+Need consider if "required length" maybe 16? If recommend 32 maybe okay as example. Could say choose one supported AES key length and document. But spec maybe expects 32? Let's think. The task: "The provided key bytes is long enough (>= 64 bytes). Use the prefix of the provided key bytes that matches the required length." This is odd: key bytes long enough >=64, use prefix that matches required length. Required length could be 32? Why >=64? Maybe they want to use first 32 bytes? Or maybe they want to use 64? AES doesn't support 64. Maybe "required length" refers to AES key length, but which? Could be 32 because max. If key >=64, prefix 32. Could be 16? In many tasks, if key bytes long enough, use prefix of required length (16, 24, or 32). But no explicit. Maybe they expect AES key length 32? Let's inspect wording: "The provided key bytes is long enough (>= 64 bytes). Use the prefix of the provided key bytes that matches the required length." If key is >=64, it's long enough for any AES key length. "required length" singular maybe the length required by AES? But AES has multiple. Could be they intend to use 32 bytes because it's the longest standard AES key. Or maybe they intend to use 16 bytes because AES block size? No, key length. Could be from a benchmark where key is 64 bytes and they want first 32? Need not decide in review; candidate missing. In fix recommendation, avoid committing? "choose the intended AES key length (e.g., 32 bytes)". But if spec ambiguous, maybe issue: ambiguous required key length. But candidate not implement. Could include MEDIUM: spec ambiguity? The review is of candidate against spec, not spec. But can note implementation must define. Maybe not.
+
+Need ensure final only JSON code fence. Good.
+
+Double-check user: "Provide your independent functional correctness review in JSON format." They specified keys. Need no extra text. final with ```json.
+
+Need maybe include "verdict": "NEEDS_REVISION". Good.
+
+Potential issue: Candidate has no body, but in Python a function with docstring is valid. It returns None. So high.
+
+Need maybe mention missing return statement. Good.
+
+Let's final.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "encrypt_data function body",
+      "severity": "HIGH",
+      "description": "The candidate contains only the docstring and no executable statements. Calling encrypt_data returns None instead of Tuple[bytes, bytes, bytes], and no AES-CBC encryption, IV generation, padding, or key prefix selection is performed.",
+      "fix_recommendation": "Implement the function: select the required AES key prefix, generate a 16-byte IV, create AES.new(key_used, AES.MODE_CBC, iv), encrypt pad(data, AES.block_size), and return (ciphertext, iv, key_used)."
+    },
+    {
+      "location": "key derivation",
+      "severity": "MEDIUM",
+      "description": "The specification requires using the prefix of the provided key bytes that matches the required AES key length, but the candidate does not define or apply any key length.",
+      "fix_recommendation": "Define the required AES key length, for example 32 bytes for AES-256, and use key_used = key[:required_length] before creating the cipher."
+    },
+    {
+      "location": "imports",
+      "severity": "MEDIUM",
+      "description": "The candidate imports AES and pad but does not import a secure random source needed to generate the IV.",
+      "fix_recommendation": "Add import os and use os.urandom(16), or import Crypto.Random and use get_random_bytes(16)."
+    },
+    {
+      "location": "encrypt_data input validation",
+      "severity": "LOW",
+      "description": "No validation is present for key length or data type. The spec assumes key is at least 64 bytes, but a robust implementation should fail clearly if the key is too short.",
+      "fix_recommendation": "Optionally raise ValueError if len(key) < required_length or if data is not bytes, while still satisfying the specified happy path."
+    }
+  ]
+}
+```

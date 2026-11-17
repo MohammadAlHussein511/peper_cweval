@@ -1,0 +1,48 @@
+<think>
+
+Okay, let's take a look at this problem. The task is to implement a Python function called get_ls_result that runs the 'ls -l' command in a given directory and returns the stdout. If there's any error, like the directory not existing or permission issues, it should return an empty string.
+
+The candidate's implementation is just the docstring and the function definition. There's no actual code inside. So the function is empty. That's a problem because the function needs to execute the command and handle errors.
+
+First, I need to check what's missing. The function needs to use something like subprocess to run the command. The standard way would be to use subprocess.run, capture the output, and handle exceptions.
+
+But the candidate's code doesn't have any of that. So the main issue is that the function is not implemented. The docstring is correct, but the actual code is missing. That's a big problem.
+
+Also, the function is supposed to return the stdout. Without any code, it would return None by default, which doesn't meet the requirement of returning an empty string on error. But in this case, since there's no code, the function doesn't do anything.
+
+So the issues here are:
+
+1. The function is not implemented. There's no code inside it. So it doesn't perform any action. That's a critical error. The severity would be HIGH because the function doesn't work as intended.
+
+2. The code doesn't import the necessary modules, like subprocess. But since there's no code, maybe that's not applicable. However, if the candidate had written code, they would need to import subprocess.
+
+But in the given code, there's no code. So the main issue is the absence of implementation.
+
+Another thing: the function's return type is str, but without any code, it would return None, which is a type mismatch. But the problem says to return an empty string on error. So even if the code was there, but didn't handle errors, that's another issue. But in this case, the code is entirely missing.
+
+So the verdict should be NEEDS_REVISION. The issues would include the missing implementation and possible missing imports if there was code. But since there's no code, the main issue is the lack of implementation.
+
+So the JSON report should indicate that the function is not implemented, which is a high-severity issue. The fix recommendation would be to implement the function using subprocess and handle exceptions.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "get_ls_result function body",
+      "severity": "HIGH",
+      "description": "Function is not implemented. The code is missing the actual logic to execute the 'ls -l' command and handle errors.",
+      "fix_recommendation": "Implement the function using subprocess module to execute the command, capture stdout, and handle exceptions. Return empty string on errors."
+    },
+    {
+      "location": "get_ls_result function body",
+      "severity": "HIGH",
+      "description": "No error handling or command execution logic present. The function would return None by default, violating the return type and requirements.",
+      "fix_recommendation": "Add code to execute 'ls -l' in the given directory, capture output, and return it. Return empty string on any exception."
+    }
+  ]
+}
+```

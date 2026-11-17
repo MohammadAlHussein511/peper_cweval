@@ -1,0 +1,24 @@
+{
+  "run_id": "run_2026_persistent_v3",
+  "timestamp_utc": "2026-11-16T18:41:38.497741+00:00",
+  "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "is_kaggle": false,
+  "is_colab": false,
+  "persistent_work_dir": "C:\\cweval_paper\\cweval_study",
+  "system_ram_gb": 12.7,
+  "global_seed": 42,
+  "cweval_pinned_commit": "e9a2a124c8c53679b6d8d27adfd2f6c40e7576d7",
+  "cweval_docker_digest": "co1lin/cweval@sha256:2d28261cc26838e20b69ce28a742b376a7c420b2f9591b32b95922e2794413d0",
+  "gpus": [
+    {
+      "index": "0",
+      "name": "NVIDIA GeForce MX550",
+      "memory_total": "2048 MiB",
+      "compute_cap": "7.5",
+      "driver_version": "516.40"
+    }
+  ],
+  "disk_working_free_gb": 156.82,
+  "disk_tmp_free_gb": 156.82
+}

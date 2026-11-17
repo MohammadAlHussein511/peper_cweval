@@ -1,0 +1,10 @@
+<think>
+We need answer user's request: provide independent functional correctness review in JSON format. Need analyze candidate implementation against task spec. Need likely output JSON only? User says Provide your independent functional correctness review in JSON format. We need produce valid JSON. Need consider if any issues. Task: hash_certificate(cert: str) -> str: Hash given certificate securely and return hash as hexadecimal string. Candidate: import hashlib, function returns hashlib.sha256(cert.encode('utf-8')).hexdigest(). This is correct. Edge cases: cert must be str per type hint; if None or non-str, AttributeError, but spec says str. Secure: SHA-256 is secure. Hex string. No missing imports. Return type str. Could mention no issues. Verdict PASS. issues empty array. Need ensure JSON inside maybe no markdown? They requested JSON format. Could output just JSON. Need maybe include keys? Not specified but likely {"verdict": "PASS", "issues": []}. Ensure valid JSON. Final only JSON.
+
+</think>
+
+
+{
+  "verdict": "PASS",
+  "issues": []
+}

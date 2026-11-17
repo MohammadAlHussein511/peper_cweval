@@ -1,0 +1,7 @@
+arm_key,arm_description,tasks_n,func_pass_count,func_pass_rate_pct,func_95ci,sec_pass_count,sec_pass_rate_pct,sec_95ci,func_sec_pass_count,func_sec_pass_rate_pct,func_sec_95ci,total_input_tokens,total_output_tokens,total_tokens,total_inference_sec,mean_inference_sec_per_task,docker_eval_sec,gpu_hours_dual_t4
+A1,Single-Pass Baseline (1x),25,25,100.0,"[86.68%, 100.0%]",25,100.0,"[86.68%, 100.0%]",25,100.0,"[86.68%, 100.0%]",5525,57855,63380,426.04,17.04,18.011,0.2367
+A2_Index0,A2 Selected@1 (Index0 Policy),25,24,96.0,"[80.46%, 99.29%]",24,96.0,"[80.46%, 99.29%]",24,96.0,"[80.46%, 99.29%]",22100,225452,247552,1875.15,75.01,16.883,1.0418
+A2_SyntaxSelected,A2 Selected@1 (AST Syntax Policy),25,25,100.0,"[86.68%, 100.0%]",25,100.0,"[86.68%, 100.0%]",25,100.0,"[86.68%, 100.0%]",22100,225452,247552,1875.15,75.01,18.557,1.0418
+A2,Four Independent Samples (Pass@4 Oracle),25,25,100.0,"[86.68%, 100.0%]",25,100.0,"[86.68%, 100.0%]",25,100.0,"[86.68%, 100.0%]",22100,225452,247552,1875.15,75.01,25.424,1.0418
+B,Homogeneous Dual Self-Review (Qwen3-Coder),25,24,96.0,"[80.46%, 99.29%]",24,96.0,"[80.46%, 99.29%]",24,96.0,"[80.46%, 99.29%]",44698,154153,198851,1311.25,52.45,9.662,0.7285
+C,Heterogeneous Peer Review (Qwen3.8 + DeepSeek-R1),25,24,96.0,"[80.46%, 99.29%]",24,96.0,"[80.46%, 99.29%]",24,96.0,"[80.46%, 99.29%]",48599,173219,221818,2690.92,107.64,14.005,1.495

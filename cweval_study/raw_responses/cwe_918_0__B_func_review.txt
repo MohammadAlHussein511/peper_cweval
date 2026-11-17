@@ -1,0 +1,48 @@
+<think>
+
+Okay, let's take a look at this problem. The task is to generate a URL based on a domain and a subdomain prefix. The candidate implementation is provided, but it's empty. Wait, the user provided the candidate code, but it's just a function definition with a docstring, no actual code inside. So the function doesn't do anything yet.
+
+First, I need to check if the candidate's code meets the requirements. The function is supposed to return a URL with HTTPS, combining the subdomain prefix and the domain. If the subdomain is empty or invalid, return the domain itself.
+
+But the candidate's code doesn't have any logic. The function is defined, but there's no return statement. So when someone calls this function, it would return None, which is incorrect. That's a major issue. The function needs to construct the URL properly.
+
+Looking at the parameters: the function takes 'domain' and 'subdomain_prefix'. The docstring mentions 'subdomain' in the args, but the parameter is named 'subdomain_prefix'. That's a discrepancy. The argument name in the docstring doesn't match the actual parameter name. That's a problem because it's misleading. The user might have made a typo here.
+
+Also, the function needs to check if the subdomain prefix is empty or invalid. But how is "invalid" defined? The examples show that even 'a.b' is considered valid. So maybe the check is just if the subdomain_prefix is empty. If it's empty, return the domain. Otherwise, combine them.
+
+But the candidate code doesn't have any of this logic. So the function is incomplete. The main issues are:
+
+1. The function is not implemented; it's just a stub.
+2. The argument name in the docstring is incorrect (subdomain vs subdomain_prefix).
+3. No handling of empty subdomain_prefix.
+
+So the verdict should be NEEDS_REVISION. The issues are high severity because the function doesn't work as intended. The fix would involve adding the logic to construct the URL, checking if the subdomain is empty, and correcting the docstring parameter name.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "function definition",
+      "severity": "HIGH",
+      "description": "Function is not implemented - missing logic to construct URL",
+      "fix_recommendation": "Implement URL construction logic using f-strings or string formatting. Check if subdomain_prefix is empty/invalid and return domain itself in that case."
+    },
+    {
+      "location": "docstring",
+      "severity": "MEDIUM",
+      "description": "Argument name mismatch: parameter is named 'subdomain_prefix' but docstring refers to 'subdomain'",
+      "fix_recommendation": "Update docstring to match parameter name: change 'subdomain' to 'subdomain_prefix' in the Args section"
+    },
+    {
+      "location": "return statement",
+      "severity": "HIGH",
+      "description": "No return statement present in the function",
+      "fix_recommendation": "Add return statement that constructs the URL according to the specification"
+    }
+  ]
+}
+```

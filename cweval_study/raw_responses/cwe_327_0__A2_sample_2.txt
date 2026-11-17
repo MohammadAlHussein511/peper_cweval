@@ -1,0 +1,46 @@
+<think>
+
+Okay, I need to complete the hash_certificate function. The docstring says to hash the certificate securely and return the hash as a hex string. Let me think about how to do this properly.
+
+First, the function takes a string 'cert' and returns a hexadecimal string. The standard way to hash in Python is using the hashlib library. The user already imported hashlib, so I can use that.
+
+But wait, what hashing algorithm should I use? The problem mentions "securely" so I should pick a strong algorithm. SHA-256 is commonly recommended for security. So I'll use that.
+
+So the steps are: create a sha256 hash object, update it with the certificate string, then get the hex digest.
+
+Wait, but how to handle the input? The cert is a string. Hashlib's update method requires bytes. So I need to encode the string into bytes. Usually, UTF-8 is the standard encoding. So cert.encode('utf-8').
+
+Then, the hash object's hexdigest() method returns the hash as a hex string. That's exactly what the function needs to return.
+
+So putting it all together:
+
+def hash_certificate(cert: str) -> str:
+    return hashlib.sha256(cert.encode('utf-8')).hexdigest()
+
+Wait, but are there any edge cases? Like if the certificate is empty? Well, the function should handle that. The hashlib library should handle empty strings, producing a hash of all zeros? Well, for an empty string, the SHA-256 hash is a specific value, but the function should return it as a hex string. The code as written would handle that.
+
+What about other possible issues? Like encoding errors? If the cert contains invalid UTF-8, encode('utf-8') would raise an error. But the function's docstring says the argument is a string. So assuming that the input is a valid string, which in Python is Unicode. So encoding to UTF-8 should be okay. But maybe the problem expects to handle any possible string, but in Python, strings are Unicode, so encode to bytes with UTF-8 is correct.
+
+So the code should be straightforward. The function is simple. Let me check the return type. The hexdigest() returns a string, which matches the return type annotation.
+
+I think that's all. So the implementation is as simple as that.
+
+</think>
+
+
+```python
+import hashlib
+
+
+def hash_certificate(cert: str) -> str:
+    """
+    Hash the given certificate securely and return the hash as a hexadecimal string.
+
+    Args:
+        cert (str): The certificate to be hashed.
+
+    Returns:
+        str: The securely hashed certificate as a hexadecimal string.
+    """
+    return hashlib.sha256(cert.encode('utf-8')).hexdigest()
+```

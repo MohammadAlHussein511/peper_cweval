@@ -1,0 +1,67 @@
+<think>
+
+Okay, I need to complete the get_user function. Let me think about what's required here. The function takes a cursor, username, and password, and returns the user info if there's a matching user. The table has username, password, and userInfo columns.
+
+First, I should write an SQL query to select the userInfo where the username and password match. But wait, how to do that safely? Oh right, using parameterized queries to prevent SQL injection. So I shouldn't directly format the variables into the query string.
+
+So the query would be something like: SELECT userInfo FROM users WHERE username = ? AND password = ?. Then pass the username and password as parameters.
+
+But wait, the parameters are both strings. So the cursor's execute method would take the query and a tuple of the parameters. Like cursor.execute(query, (username, password)).
+
+Then, fetch the result. Using fetchone() since we're looking for a single user. If there's a result, return the userInfo. Otherwise, return None.
+
+Wait, the return type is str | None. So if the query returns a row, we take the first element (since userInfo is the only column selected). But what if the query returns multiple rows? Well, the username is a primary key, so there can't be multiple rows with the same username. So fetchone() should suffice.
+
+So putting it all together:
+
+def get_user(cursor, username, password):
+    query = "SELECT userInfo FROM users WHERE username = ? AND password = ?"
+    cursor.execute(query, (username, password))
+    result = cursor.fetchone()
+    if result:
+        return result[0]
+    else:
+        return None
+
+But wait, what about case sensitivity? Like, if the username is stored as 'User' and the input is 'user'? But the problem statement doesn't mention that, so probably assume that the credentials are exact matches.
+
+Also, need to make sure that the parameters are properly passed. Oh, and the password is stored as a string. So the function is correct.
+
+But what about if the password is None? Well, the function's parameters are username and password, which are passed as strings. But the function's docstring says the args are username and password, which are strings. So the code should handle cases where password is an empty string, but that's up to the caller.
+
+So the code should be as written. Let me check the imports. The code already imports sqlite3, so the function can use that.
+
+So the complete code would be the function with that logic. Also, the function is supposed to return None if no user is found. So that's handled by checking if result is not None.
+
+Yes, that should do it. Let me write that in the code.
+
+</think>
+
+
+```python
+import sqlite3
+
+
+def get_user(cursor: sqlite3.Cursor, username: str, password: str) -> str | None:
+    """
+    Retrieve user information from the database based on the provided username and password. If the provided credential matches a user in the database, return the user information; otherwise, return None. The schema of the users table is as follows:
+
+    CREATE TABLE users (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        userInfo TEXT
+    )
+
+    Args:
+        cursor: A cursor object to interact with the SQLite database.
+        username: The username of the user to retrieve.
+        password: The password of the user to retrieve.
+
+    Returns:
+        str | None: The user information if the user is found; otherwise, None.
+    """
+    query = "SELECT userInfo FROM users WHERE username = ? AND password = ?"
+    cursor.execute(query, (username, password))
+    result = cursor.fetchone()
+    return result[0] if result else None
+```

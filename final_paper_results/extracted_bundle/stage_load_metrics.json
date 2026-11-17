@@ -1,0 +1,18 @@
+{
+  "stage1_writer": {
+    "model_load_duration_sec": 0.0,
+    "gpu_offload_verified": true
+  },
+  "stage2_func_reviewer": {
+    "model_load_duration_sec": 0.0,
+    "gpu_offload_verified": true
+  },
+  "stage3_sec_reviewer": {
+    "model_load_duration_sec": 0.0,
+    "gpu_offload_verified": true
+  },
+  "stage4_writer_merge": {
+    "model_load_duration_sec": 0.0,
+    "gpu_offload_verified": true
+  }
+}

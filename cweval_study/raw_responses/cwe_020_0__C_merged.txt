@@ -1,0 +1,154 @@
+<think>
+
+Okay, I need to fix the get_target_for_redirect function based on the reviews. Let me start by understanding the issues.
+
+First, the original code only has a docstring and no logic. So the function returns None, which is wrong. The functional review says to implement the logic. The security audit also points out that without implementation, there's an open redirect vulnerability. So I need to add the actual code.
+
+The main tasks are: check if the target URL is within the domain, return it if yes, else fallback to the domain. Also, enforce https.
+
+Let me think about how to parse the URL. Using urllib.parse.urlparse makes sense. The netloc part gives the domain. But need to handle cases where the target might have a different protocol, like http. So, the function should normalize to https.
+
+For the domain check: the target's domain should be the same as the provided domain or a subdomain. For example, if domain is example.com, then music.example.com is okay, but example.com is also okay. But something like another.com is not. Also, need to make sure that subdomains are properly checked. So, the target's netloc should end with '.' + domain, but also check that it's exactly the domain or a subdomain. Wait, the functional review suggests checking if host == domain or host.endswith('.' + domain). But need to avoid lookalike domains like example.com.evil.com. So, maybe split the netloc and check if it's a subdomain.
+
+Wait, for example, if the domain is example.com, then the target's netloc could be example.com, or sub.example.com. But not example.com.evil.com. So, the check should be that the netloc is either equal to the domain, or starts with a subdomain part followed by the domain. So, for example, 'sub.example.com' ends with '.example.com' when you add a dot. So, the check would be: netloc == domain or netloc.endswith('.' + domain). But also, need to make sure that the domain is properly normalized. Like, maybe lowercasing, but the problem says the domain is provided without protocol, but maybe the target's netloc could have uppercase letters. So, normalize both to lowercase.
+
+So steps:
+
+1. Parse the target URL using urlparse. Check if it's a valid URL. But how? Maybe try to parse it, and if it's invalid, fallback.
+
+2. Get the netloc (domain part) from the parsed URL. Also, check if the scheme is http or https. If it's http, change to https. If it's something else, maybe invalid? Or just use the existing scheme? The spec says to use https, so maybe enforce that.
+
+Wait, the spec says "Use https protocol." So regardless of the target's original protocol, the returned URL should be https. So even if the target is http://example.com, it should be converted to https.
+
+So, after parsing, if the scheme is not https, replace it with https. But also, if the target is invalid (like no scheme), maybe we should fallback.
+
+But how to handle that? For example, if the target is 'example.com', then urlparse would have a netloc of 'example.com' but no scheme. So, in that case, maybe we need to assume http or https? But the spec says to use https. So perhaps, in such cases, the target is considered invalid, and we fallback to the domain.
+
+So, the plan:
+
+- Parse the target URL. If parsing fails (like invalid URL), then fallback.
+
+- Check if the netloc (domain) is part of the provided domain. So, check if netloc is the same as domain, or a subdomain.
+
+- If yes, then return the target URL with https scheme.
+
+- Else, return https://domain.
+
+But how to handle cases where the target is not a valid URL? For example, if the target is empty, or has invalid format. The functional review says to fallback to the domain URL in such cases.
+
+So, the steps in code:
+
+Import urlparse from urllib.parse.
+
+Handle possible exceptions when parsing. But maybe just check if the parsed URL has a netloc. Or, perhaps use a try-except block? Or check if the netloc is present.
+
+But for simplicity, maybe proceed as follows:
+
+Parse the target with urlparse. Check if the scheme is present. If not, maybe assume it's http? But the spec says to use https. So, perhaps, if the target is not a valid URL (like no scheme), then it's considered invalid, and we fallback.
+
+But how to check that? For example, if the target is 'example.com', then urlparse would have netloc as 'example.com', but no scheme. So, in that case, the target is considered invalid, and we fallback.
+
+So, code steps:
+
+def get_target_for_redirect(target: str, domain: str) -> str:
+
+    from urllib.parse import urlparse
+
+    # Check if target is empty or invalid
+    if not target:
+        return f'https://{domain}'
+
+    parsed = urlparse(target)
+    # Check if the parsed URL has a scheme and netloc
+    if not parsed.scheme or not parsed.netloc:
+        return f'https://{domain}'
+
+    # Normalize domain and netloc to lowercase
+    domain = domain.lower()
+    netloc = parsed.netloc.lower()
+
+    # Check if netloc is the domain or a subdomain
+    if netloc == domain or (netloc.endswith('.' + domain) and netloc.split('.')[-2] == domain):
+        # Wait, that's not right. For example, 'sub.example.com' ends with '.example.com', but the split would be ['sub', 'example', 'com']? Wait, no. If the domain is 'example.com', then netloc is 'sub.example.com', which ends with '.example.com'. So, the check would be netloc.endswith('.' + domain). But for domain 'example.com', the check would be netloc ends with '.example.com'. So, 'sub.example.com' ends with that. But 'example.com' would be equal to the domain. So, the condition is:
+
+    if netloc == domain or netloc.endswith('.' + domain):
+
+        # Now, ensure the scheme is https
+        # If the original scheme is http, change to https. If it's something else, maybe keep it? But the spec says to use https. So, regardless, set to https.
+
+        # Rebuild the URL with https
+        # Also, need to handle the path, query, etc. So, the original path, query, fragment, etc. should be preserved, but scheme is https.
+
+        # So, use the parsed URL, and replace the scheme with 'https'
+
+        # But how to do that? Using urlunparse.
+
+        # So, create a new parsed URL with scheme 'https', and the same netloc, path, etc.
+
+        # So:
+
+        new_url = parsed._replace(scheme='https')
+        return new_url.geturl()
+
+    else:
+        # Fallback to domain
+        return f'https://{domain}'
+
+Wait, but what about cases where the domain is 'example.com' and the target is 'https://example.com'? The netloc is 'example.com', which equals the domain, so it's allowed. So that's correct.
+
+Another example: target is 'https://blog.example.com', domain is 'example.com'. The netloc is 'blog.example.com', which ends with '.example.com', so it's allowed.
+
+But what about a target like 'https://example.com.evil.com'? The netloc is 'example.com.evil.com', which ends with '.example.com'? No, because the domain is 'example.com', so the check is netloc ends with '.example.com'. The netloc here is 'example.com.evil.com', which ends with '.evil.com', not '.example.com'. So that would not be allowed. So that's correct.
+
+But what about a target like 'https://sub.example.com'? The netloc is 'sub.example.com', which ends with '.example.com', so it's allowed.
+
+But what if the domain is 'example.com' and the target is 'https://example.com'? Then netloc is 'example.com' which equals the domain, so it's allowed.
+
+But what if the domain is 'example.com' and the target is 'https://sub.example.com'? It's allowed.
+
+But what if the domain is 'example.com' and the target is 'https://sub.example.com'? The code would check if netloc ends with '.example.com', which it does. So that's correct.
+
+But what about a target like 'https://example.com'? The code would return that as is, with https.
+
+But what if the target is 'http://example.com'? The code would replace the scheme with https, so it becomes 'https://example.com'.
+
+But what if the target is 'http://sub.example.com'? Then the code would replace the scheme to https, so 'https://sub.example.com'.
+
+But what if the target is 'https://another.com'? Then the netloc is 'another.com', which does not end with '.example.com', so it falls back to 'https://example.com'.
+
+So that's correct.
+
+But what about the case where the domain is 'example.com' and the target is 'https://example.com:8080'? The netloc would be 'example.com:8080'. The code checks if it's equal to the domain (no) or ends with '.example.com' (no, because it's 'example.com:8080' which ends with '8080'). So the code would fallback. But maybe the user intended that the port is allowed. But the problem statement doesn't mention ports. So perhaps the function should consider the domain without port. So, the code as written would not allow that. But maybe the function should check the domain part, ignoring the port. So, for example, the netloc is 'example.com:8080', but the domain is 'example.com'. So, the code would check if the netloc is the domain (no) or ends with '.example.com' (no, because the netloc is 'example.com:8080'). So the code would fallback. But maybe the user wants to allow any port. But the problem statement doesn't mention that. So perhaps the function should check the domain part, ignoring the port. So, how to do that?
+
+Hmm, that's a possible issue. For example, if the target is 'https://example.com:8080', the domain is 'example.com'. The code would check if the netloc (example.com:8080) is equal to the domain (example.com) or ends with .example.com. Since it's not, the code would fallback. But maybe the user wants to allow that. However, the problem statement doesn't mention ports, so perhaps the function should not consider them. But the security audit might consider that as a possible vulnerability. For example, if the domain is 'example.com', but the target is 'https://example.com:8080', which is a different port. But the function would treat it as out of domain. But maybe that's correct, as the domain is 'example.com', and the port is part of the netloc. So, the code as written would not allow that. But perhaps the function should check the domain part, ignoring the port. So, how to do that?
+
+Well, the code could split the netloc on the first colon, take the part before the colon, and then check against the domain. For example:
+
+netloc = parsed.netloc.split(':')[0].lower()
+
+So, for 'example.com:8080', it becomes 'example.com'.
+
+Then, check if that is the domain or a subdomain.
+
+But the problem statement doesn't mention ports, so maybe the function should not handle that. But the security audit might consider that as a possible issue. However, given the original examples, the function may not need to handle ports. So perhaps the code as written is acceptable, but maybe the user should be aware.
+
+But for the purpose of this problem, perhaps proceed with the initial approach, and handle the netloc as is.
+
+Another thing: the code needs to handle cases where the target is not a valid URL. For example, if the target is 'invalid', then urlparse would have a netloc of 'invalid' but no scheme. So, the code would return the fallback.
+
+But what if the target is 'http://example.com'? The code would parse it, check the netloc, which is 'example.com', which matches the domain. Then, replace the scheme with https, so the result is 'https://example.com'.
+
+Another case: target is 'https://example.com', domain is 'example.com' → returns same.
+
+Now, the code also needs to handle the case where the domain is a subdomain. Wait, no. The function is supposed to check if the target is within the provided domain. So, if the domain is 'example.com', then the target can be 'example.com' or 'sub.example.com'. But if the domain is 'sub.example.com', then the target can be 'sub.example.com' or 'another.sub.example.com'.
+
+So the code's check of netloc == domain or netloc ends with '.' + domain would work for that.
+
+But what if the domain is 'example.com' and the target is 'https://sub.example.com'? The netloc is 'sub.example.com', which ends with '.example.com' → yes. So it's allowed.
+
+But what if the domain is 'example.com' and the target is 'https://sub.example.com'? The code would allow it.
+
+Now, the code also needs to handle the case where the domain is empty. But the function's parameters say that domain is a string without protocol. So, perhaps the function should handle empty domain? But the problem statement doesn't mention that. The functional review says to handle empty or invalid inputs by falling back. So, in the code, if the domain is empty, then the fallback is 'https://' + domain, which would be 'https://' + empty string → 'https://', which is invalid. So, perhaps need to handle that.
+
+But the problem says that the domain is provided as a string without protocol. So, perhaps the function should assume that domain is a valid domain. But the code should handle cases where domain is empty. For example, if domain is empty, then the fallback is 'https://' + domain → 'https://', which is invalid. So, perhaps in that case, the function should return 'https
+</think>

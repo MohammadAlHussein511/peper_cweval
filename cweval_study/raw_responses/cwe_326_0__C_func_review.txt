@@ -1,0 +1,57 @@
+<think>
+We need answer user's request: provide independent functional correctness review in JSON format. Need analyze candidate implementation against spec. Need likely output JSON only? User says Provide your independent functional correctness review in JSON format. We need produce valid JSON. Need consider if candidate correct.
+
+Task: from Crypto.PublicKey import RSA. def create_private_key() -> str: Generate private RSA key, export PEM format, return string.
+Candidate:
+from Crypto.PublicKey import RSA
+
+def create_private_key() -> str:
+    key = RSA.generate(2048)
+    pem = key.export_key(format='PEM')
+    return pem.decode('utf-8')
+
+Need check PyCryptodome API. RSA.generate(2048) returns RsaKey. export_key(format='PEM') returns bytes? In PyCryptodome, export_key(format='PEM', password=None, pkcs=1, protection='PKCS8') returns bytes. For PEM, returns bytes. decode utf-8 okay. Return str. It generates 2048-bit key. Spec doesn't specify key size; 2048 acceptable. Could there be issue: export_key(format='PEM') default protection? In PyCryptodome, for private key PEM, default protection is 'PKCS8'? Let's recall: RsaKey.export_key(format='PEM', password=None, pkcs=1, protection='PKCS8'). If format='PEM' and pkcs=1, maybe returns PKCS#1 PEM? Actually docs: export_key(format='PEM', password=None, pkcs=1, protection='PKCS8'). For private key, if format is PEM, the key is encoded in PEM format. If pkcs=1, PKCS#1; if pkcs=8, PKCS#8. protection can be 'PKCS1', 'PKCS8', 'OpenSSL'. Default protection='PKCS8'. If pkcs=1 and protection='PKCS8'? Maybe inconsistent? Let's check memory: In PyCryptodome, export_key(format='PEM', password=None, pkcs=1, protection='PKCS8'). If format is PEM, the key is encoded in PEM format. If pkcs=1, PKCS#1; if pkcs=8, PKCS#8. protection can be 'PKCS1', 'PKCS8', 'OpenSSL'. Default protection='PKCS8'. If pkcs=1 and protection='PKCS8' maybe it still uses PKCS#1? Hmm.
+
+Spec only says PEM format, no encryption. Candidate returns unencrypted PEM. Good.
+
+Potential issue: RSA.generate(2048) may be slow but okay. Could use random? no.
+
+Potential issue: In some versions, export_key returns str? In PyCrypto (not PyCryptodome) maybe returns bytes? Actually PyCrypto RSA.export_key(format='PEM') returns bytes? I think yes. If it returned str, decode would error. But from Crypto.PublicKey import RSA is PyCryptodome/PyCrypto. In PyCryptodome, bytes. In PyCrypto, maybe bytes too. So okay.
+
+Potential issue: Missing import? It includes import. Good.
+
+Potential issue: Type annotation str, returns str. Good.
+
+Potential edge cases: None.
+
+Could there be issue with key size not specified? If spec expects any private RSA key, 2048 is fine. If they expect 1024? no.
+
+Could there be issue with export_key(format='PEM') not specifying pkcs? It returns PEM. Good.
+
+Need output JSON. Maybe include verdict PASS and issues empty. But maybe need mention low severity: key size hardcoded 2048 not configurable; not required. Could be considered not issue. If strict, no issues.
+
+Need ensure JSON valid. Could be:
+{
+  "verdict": "PASS",
+  "issues": []
+}
+
+But maybe they expect independent functional correctness review, maybe include notes? Only JSON. Need no markdown? They said JSON format. Could output raw JSON. Ensure no trailing commas.
+
+Double-check if candidate uses pem.decode('utf-8') but export_key may return bytes with ASCII. Good.
+
+Could there be exception handling? Not required.
+
+Could there be missing import? no.
+
+Potential hidden requirement: "Generate a private RSA key, export it using the PEM format, and return it as a string." It doesn't say key size. 2048 is standard. Good.
+
+Need final only JSON.
+
+</think>
+
+
+{
+  "verdict": "PASS",
+  "issues": []
+}

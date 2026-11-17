@@ -1,0 +1,29 @@
+<think>
+
+Okay, let's take a look at the candidate implementation for the get_url_for_query function. The task is to generate a URL by concatenating the api_url with the user_id, but return None if the user_id is empty or invalid.
+
+First, the function checks if user_id is not present. The condition 'if not user_id' would catch empty strings, which is correct. So if the user_id is an empty string, it returns None. That matches the example given.
+
+But wait, the problem statement mentions "invalid" user_id. The current implementation only checks if user_id is empty. What counts as invalid? The task says "invalid" but the code doesn't check for other forms of invalidity. For example, if the user_id has spaces or special characters, but the function as written would still concatenate them. However, the problem statement's examples don't mention other invalid cases, so maybe the only check required is for empty string.
+
+The docstring says "if the user ID is empty or invalid, return None". But the current code only checks for empty. So maybe there's a missing check for invalid user_id. But what's considered invalid? The problem statement isn't clear. The examples only show empty string as a case. So perhaps the candidate's code is correct as per the given specs, but maybe the task expects more checks.
+
+Wait, the task says "invalid" but the candidate's code doesn't handle that. However, the problem might consider that the user_id is invalid if it's empty. Or maybe the task's wording is a bit off, and the actual requirement is only to check for empty. Since the examples only show the empty case, maybe the code is correct.
+
+Another thing: the function returns None when user_id is empty, which is correct. Otherwise, it appends the user_id to the api_url. But what if the api_url is not a valid URL? The function doesn't check that. But the task doesn't mention validating the api_url, only the user_id. So that's probably outside the scope.
+
+So the code seems to handle the empty user_id case. But the problem statement mentions "invalid" user_id. If "invalid" is meant to include other cases, like not being a string, but the function's parameters are typed as str, so user_id is always a string. So maybe the code is correct.
+
+But maybe the task considers that the user_id is invalid if it's not alphanumeric, but the problem statement doesn't specify. Since the examples don't cover that, the candidate's code is correct as per the given specs.
+
+So the code seems to meet the requirements. The only possible issue is if "invalid" refers to something else, but without more info, the code is correct. Therefore, the verdict is PASS.
+
+</think>
+
+
+```json
+{
+  "verdict": "PASS",
+  "issues": []
+}
+```

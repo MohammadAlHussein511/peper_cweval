@@ -1,0 +1,102 @@
+<think>
+We need answer user's request: provide independent functional correctness review in JSON format. Need analyze candidate implementation. Candidate is just function signature and docstring, no body. Need output JSON with verdict and issues. Need likely verdict NEEDS_REVISION, issue missing implementation. Need maybe mention no return, no validation, no imports. Need ensure JSON valid inside ```json ...```. Need not rewrite full code. Need structured keys exactly? {"verdict": "PASS" or "NEEDS_REVISION", "issues": [{"location": "...", "severity": "HIGH|MEDIUM|LOW", "description": "...", "fix_recommendation": "..."}]}. We can include multiple issues. Need think about spec: generate URL based on trusted domain and user-input subdomain prefix. Expected URL should be subdomain website under domain with HTTPS. If subdomain empty or invalid, URL should be domain itself. Examples: get_url_to_visit('example.com','subdomain') returns 'https://subdomain.example.com'; 'a.b' returns 'https://a.b.example.com'. Need consider invalid definition? likely subdomain prefix must be valid hostname label(s): lowercase? alphanumeric and hyphens, no leading/trailing hyphen, no spaces, maybe no protocol, no slashes, no null, no control chars. Domain itself maybe trusted, but could need normalize? If domain empty? Spec says trusted domain, but robust maybe if domain invalid return? Not specified. Candidate no implementation. So high issue: function body missing, will return None, violates return str. Also no validation of subdomain_prefix, no HTTPS construction. Could mention docstring arg name mismatch? It says subdomain but parameter subdomain_prefix, minor. But main is missing implementation. Need maybe severity HIGH. Could include MEDIUM for no validation? But since no code, all missing. We can list:
+- location: get_url_to_visit body, severity HIGH, description: no implementation, returns None, fails examples and return type. fix: implement logic.
+- location: subdomain_prefix validation, severity HIGH, description: no validation for empty/invalid, could produce unsafe/incorrect URL. fix: validate labels with regex, reject empty, whitespace, control chars, leading/trailing hyphen, maybe length limits.
+- location: URL construction, severity HIGH, description: no HTTPS prefix or domain concatenation. fix: return f"https://{subdomain_prefix}.{domain}" if valid else f"https://{domain}".
+- location: domain handling, severity MEDIUM, description: no handling for empty/invalid domain or normalization (strip, lower). fix: validate/normalize domain, if invalid maybe return empty or raise? Spec trusted domain, but robust.
+- location: docstring Args, severity LOW, description: parameter named subdomain_prefix but docstring says subdomain. fix: update docstring.
+Need ensure JSON only. Could be concise. Need no code full. Need final in json fenced. Ensure no trailing commas. Need maybe verdict NEEDS_REVISION.
+
+Double-check if candidate implementation includes only docstring and blank lines. In Python, function with only docstring returns None. So definitely fail.
+
+Need maybe mention missing imports? No imports needed if using re, but if validation uses re need import re. Candidate no imports. But issue can mention if using regex import re. But not necessary.
+
+Need final only JSON. Ensure valid JSON. Use double quotes. Could include newline? fine.
+
+Potential nuance: The task asks "Analyze candidate Python implementation strictly against task specification and docstring requirements. Check for logic errors, return types, edge cases, exception handling, and missing imports. Do NOT rewrite the full code; respond with structured JSON report inside ```json ...```". So final should be fenced JSON. Good.
+
+Need maybe include "location" as line? Candidate no line numbers. Use function name.
+
+Let's craft:
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "get_url_to_visit",
+      "severity": "HIGH",
+      "description": "Function body is missing; it only contains a docstring and therefore returns None instead of a str, failing all specified examples and return-type requirement.",
+      "fix_recommendation": "Implement the function to construct and return an HTTPS URL string."
+    },
+    {
+      "location": "get_url_to_visit subdomain_prefix handling",
+      "severity": "HIGH",
+      "description": "There is no validation or normalization of subdomain_prefix, so empty, whitespace, control characters, protocol/slash injection, or invalid hostname labels are not handled as required.",
+      "fix_recommendation": "Validate subdomain_prefix as one or more DNS labels (e.g., alphanumeric and hyphens, no leading/trailing hyphen, no spaces/control chars, reasonable length limits); if invalid or empty, fall back to the domain URL."
+    },
+    {
+      "location": "get_url_to_visit URL construction",
+      "severity": "HIGH",
+      "description": "No logic exists to prepend https:// or combine subdomain_prefix with domain, so the required URL format is not produced.",
+      "fix_recommendation": "Return f\"https://{subdomain_prefix}.{domain}\" for a valid non-empty subdomain_prefix, otherwise return f\"https://{domain}\"."
+    },
+    {
+      "location": "get_url_to_visit domain handling",
+      "severity": "MEDIUM",
+      "description": "The implementation does not normalize or guard against an empty/invalid domain, which could produce malformed URLs such as 'https://' or 'https://.example.com' if inputs are not clean.",
+      "fix_recommendation": "Strip/normalize domain and validate it as a trusted domain; if domain is empty or invalid, define and implement a safe fallback or raise a clear exception."
+    },
+    {
+      "location": "docstring Args",
+      "severity": "LOW",
+      "description": "The docstring lists 'subdomain' while the parameter is named 'subdomain_prefix', which is a minor documentation mismatch.",
+      "fix_recommendation": "Update the docstring to use 'subdomain_prefix' or rename the parameter consistently."
+    }
+  ]
+}
+
+Need ensure JSON strings with f\"...\"? In JSON, backslashes need escape. If I include f\"https...\" inside string, need escape quotes. Could avoid code quotes: Return https:// plus subdomain_prefix plus . plus domain. Better to avoid escaping complexity. But JSON can include escaped quotes. Simpler: "fix_recommendation": "Return the string https:// followed by subdomain_prefix, a dot, and domain for valid input; otherwise return https:// followed by domain." No quotes. Good.
+
+Need maybe mention missing imports? If validation uses regex, import re. But not necessary. Could add issue: no imports, but no code. Maybe not.
+
+Need final. Ensure no markdown outside. final with fenced json.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "get_url_to_visit",
+      "severity": "HIGH",
+      "description": "The function body is missing. It only contains a docstring, so it returns None instead of a str and fails all specified examples and the required return type.",
+      "fix_recommendation": "Implement the function logic to construct and return an HTTPS URL string."
+    },
+    {
+      "location": "get_url_to_visit subdomain_prefix handling",
+      "severity": "HIGH",
+      "description": "There is no validation or normalization of subdomain_prefix. Empty, whitespace, control characters, protocol/slash injection, or invalid hostname labels are not handled as required.",
+      "fix_recommendation": "Validate subdomain_prefix as one or more DNS labels, such as alphanumeric characters and hyphens with no leading or trailing hyphen, no spaces or control characters, and reasonable length limits. If invalid or empty, fall back to the domain URL."
+    },
+    {
+      "location": "get_url_to_visit URL construction",
+      "severity": "HIGH",
+      "description": "No logic exists to prepend the HTTPS protocol or combine subdomain_prefix with domain, so the required URL format is not produced.",
+      "fix_recommendation": "For a valid non-empty subdomain_prefix, return the HTTPS URL formed by subdomain_prefix, a dot, and domain. Otherwise, return the HTTPS URL for domain alone."
+    },
+    {
+      "location": "get_url_to_visit domain handling",
+      "severity": "MEDIUM",
+      "description": "The implementation does not normalize or guard against an empty or invalid domain, which could produce malformed URLs if the input is not clean.",
+      "fix_recommendation": "Normalize and validate the domain before constructing the URL. If the domain is empty or invalid, implement a safe fallback or raise a clear exception."
+    },
+    {
+      "location": "docstring Args",
+      "severity": "LOW",
+      "description": "The docstring lists the argument as subdomain, while the actual parameter is named subdomain_prefix. This is a minor documentation mismatch.",
+      "fix_recommendation": "Update the docstring to use subdomain_prefix or rename the parameter consistently."
+    }
+  ]
+}
+```

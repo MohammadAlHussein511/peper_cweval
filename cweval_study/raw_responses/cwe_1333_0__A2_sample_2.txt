@@ -1,0 +1,190 @@
+<think>
+
+Okay, I need to complete the check_email function according to the docstring. The function should return a tuple with a boolean indicating validity and the pattern used. Let me think about how to approach this.
+
+First, the email validation. Emails have specific rules. The standard format is local-part@domain. The local part can have letters, numbers, and certain special characters like ., _, -, etc. The domain part has to have a valid domain name with labels separated by dots, and a valid TLD like .com, .org, etc.
+
+But the problem says to cover as many cases as possible to avoid false negatives. So I need a regex that's comprehensive. However, I remember that email validation with regex can be tricky because the actual rules are complex. But for practical purposes, a well-crafted regex can handle most common cases.
+
+Let me recall the standard regex patterns for emails. A common pattern is something like:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+
+Wait, but that might not cover all cases. For example, the domain part should have at least one dot, and the TLD should be at least two letters. Also, the local part can have more characters like =, ?, etc., but maybe the regex should allow those.
+
+Alternatively, I can use a regex that's more permissive but still checks for the basic structure. Let me think about the components.
+
+The local part (before @) can include letters, numbers, and certain symbols. The domain part (after @) should have a valid domain name, which includes labels separated by dots, each label starting and ending with alphanumeric, and possibly hyphens in between.
+
+But for the purpose of this problem, maybe the regex can be as follows:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+
+Wait, but the domain part's regex might need to be more precise. For example, the domain part should have at least one dot, and each label can't start or end with a hyphen. However, implementing that in regex might be complicated.
+
+Alternatively, perhaps using a regex that's commonly accepted for validation. For example, the one from Django's email validation, or similar.
+
+Another consideration: the email might have uppercase letters, but the regex should be case-insensitive. So adding the re.IGNORECASE flag.
+
+But the problem says to return the pattern used. So the second element of the tuple is the regex pattern string.
+
+So the plan is:
+
+- Create a regex pattern that covers the standard email structure.
+- Use re.match to check if the entire string matches the pattern.
+- Return (True, pattern) if it matches, else (False, pattern).
+
+But what's the best pattern to use? Let me think.
+
+A possible pattern could be:
+
+^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$
+
+But this might be too restrictive. For example, the TLD part is limited to 2-5 letters, but some TLDs are longer, like .museum or .travel. However, the problem says to cover as many cases as possible, so maybe allowing more flexibility.
+
+Alternatively, using a more lenient pattern. Also, the domain part might have multiple dots, like example.co.uk.
+
+Another approach: the domain part should have at least one dot, and each label (split by dots) should be valid. But regex for that is complex.
+
+Alternatively, the regex could be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+This allows multiple subdomains. Let me test this:
+
+- abc@def.ghi.com: yes
+- abc.123@def.ghi.com.uk: yes
+- abc@def.com: yes
+- abc@def.co.uk: yes
+- abc@def: no (no dot in domain)
+- abc@.com: no (domain starts with dot)
+- abc@def. : no (domain ends with dot)
+
+But what about domains with hyphens? Like example-domain.com. The regex allows that because the domain part is [a-zA-Z0-9-]+, which includes hyphens. But the regex may not check for hyphens at the start or end of a label. However, that's beyond the scope here, as the problem says to cover as many cases as possible.
+
+So perhaps the regex pattern is:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But I need to make sure that the domain part has at least one dot. The pattern above requires that the domain ends with a TLD of at least two letters. The part before that can have multiple labels.
+
+So, the regex would be:
+
+^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+\.)+[a-zA-Z]{2,}$
+
+Wait, but that would allow multiple dots in the domain. Let me think.
+
+Alternatively, the domain part is split into labels, each of which is [a-zA-Z0-9-]+, but that's not entirely correct. However, for the purpose of this problem, perhaps the regex can be written as:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But I need to make sure that the domain has at least one dot. So the part after the @ is something like [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}.
+
+Wait, that would require that the domain has at least two parts, like example.com. But what about example.co.uk? That would be [a-zA-Z0-9-]+ (example) followed by (\.[a-zA-Z0-9-]+)* (which would be .co) and then \.uk. So yes, that works.
+
+So the regex pattern would be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But I should also consider that the TLD can be longer than 2 letters. For example, .museum, .travel, etc. So the {2,} is okay.
+
+Now, the regex should be written with proper escaping. In Python, the pattern would be:
+
+r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$'
+
+But I need to make sure that the regex is correctly formed.
+
+Now, the function needs to return the pattern as the second element. So the pattern is the string of the regex.
+
+But wait, the problem says to return the pattern used to check the email. So the second element is the regex pattern string.
+
+So, the code would be:
+
+import re
+from typing import Tuple
+
+def check_email(email: str) -> Tuple[bool, str]:
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$'
+    if re.match(pattern, email):
+        return (True, pattern)
+    else:
+        return (False, pattern)
+
+Wait, but what about cases where the email has uppercase letters? The regex uses [a-zA-Z], which covers both. But maybe using the re.IGNORECASE flag would make it case-insensitive. However, the problem says to check the email as per the standard, which is case-insensitive for the domain part, but the local part can be case-sensitive. However, the regex as written is case-sensitive. But according to the problem statement, perhaps it's better to make the regex case-insensitive. Wait, but the problem says to check if the email is valid. The actual email validation is case-insensitive for the domain part, but the local part can be case-sensitive. However, the regex as written is case-sensitive. But maybe the problem expects to allow case variations. So perhaps adding the re.IGNORECASE flag.
+
+But the regex pattern would then be:
+
+pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$'
+
+But with re.IGNORECASE. However, the problem says that the function should return the pattern used. So the pattern string would not include the flag. So the code would be:
+
+if re.match(pattern, email, re.IGNORECASE):
+
+But then, the pattern is the same. However, the problem says to return the pattern used. So the pattern string is as written, and the flag is part of the match.
+
+But the problem's docstring says to cover as many cases as possible. So including the flag may be necessary. However, the function's return value for the pattern is the string, not the compiled regex. So the pattern string would be the same, but the code would use the flag.
+
+But the problem says that the function returns the pattern used. So perhaps the pattern string is as written, and the code uses the flag. However, in the code, the pattern is the string, and the re.match is called with the flag.
+
+So the code would be:
+
+import re
+from typing import Tuple
+
+def check_email(email: str) -> Tuple[bool, str]:
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$'
+    if re.match(pattern, email, flags=re.IGNORECASE):
+        return (True, pattern)
+    else:
+        return (False, pattern)
+
+But wait, the problem says that the second element is the pattern used. So the pattern is the string, and the code uses the flag. However, the pattern string itself does not include the flag. So that's correct.
+
+But what about emails with uppercase letters in the domain? For example, "USER@EXAMPLE.COM" would be considered valid. The regex with the flag would match it.
+
+But the problem says to cover as many cases as possible. So including the flag is better.
+
+But what if the email is "Abc@Def.com"? The regex with the flag would match, but without the flag, it would not. So including the flag is better.
+
+So adding the re.IGNORECASE flag is better for the function's correctness.
+
+But the problem says that the function returns the pattern used. So the pattern is the string, and the flag is part of the match.
+
+So the code is correct.
+
+But what about other edge cases?
+
+For example, the email "abc@def.ghi" would not match because the TLD is only one character. The regex requires {2,} for the TLD part.
+
+Another example: "abc@def" is invalid because there's no dot in the domain.
+
+What about "abc@def.com.uk"? The domain part is def.com.uk. The regex would match because after the @, it's [a-zA-Z0-9-]+ (def) followed by (\.[a-zA-Z0-9-]+)* (which would be .com) and then \.uk. So yes.
+
+Another case: "abc@.com" would not match because the domain starts with a dot.
+
+What about "abc@def..com"? The regex would not match because the domain part after @ is [a-zA-Z0-9-]+ which can't have two dots in a row. So the regex would not match that.
+
+But maybe some valid emails have multiple dots in the domain. For example, "user@sub.domain.co.uk" is valid. The regex would match that because the domain part is sub.domain.co.uk. Let's see:
+
+The regex after @ is [a-zA-Z0-9-]+ which matches 'sub', then (\.[a-zA-Z0-9-]+)* would match '.domain', then \.co.uk? Wait, no. Let me break it down.
+
+The pattern after the @ is:
+
+[a-zA-Z0-9-]+ (so one or more of those characters) followed by (\.[a-zA-Z0-9-]+)* (zero or more of that), then \.[a-zA-Z]{2,}.
+
+So for "sub.domain.co.uk", the first part is 'sub', then (\.[a-zA-Z0-9-]+)* would match '.domain', then the final \.co.uk? No, because the final part is \.[a-zA-Z]{2,}, which would require that the last part is a TLD. So the entire domain would have to be like 'sub.domain.co.uk' where the last part is 'uk', which is two letters. So the regex would match that.
+
+But in the pattern, the part after the @ is:
+
+[a-zA-Z0-9-]+ (sub) followed by (\.[a-zA-Z0-9-]+)* (which can be .domain, .co, etc.), then \.[a-zA-Z]{2,} (so .uk).
+
+So for 'sub.domain.co.uk', the regex would match as:
+
+sub (from [a-zA-Z0-9-]+), then .domain (from (\.[a-zA-Z0-9-]+)*), then .co.uk? No. Wait, the final part is \.[a-zA-Z]{2,}, which would be .uk. But the domain is sub.domain.co.uk. So after the initial [a-zA-Z0-9-]+ (sub), the (\.[a-zA-Z0-9-]+)* would match .domain.co, and then the final \.[a-zA-Z]{2,} would be .uk. So yes. So the regex would match that.
+
+So the regex seems to handle that case.
+
+Another test case: "abc.123@def.ghi.com.uk" would match, as per the example in the docstring.
+
+What about emails with underscores, hyphens, etc. in the local part? Like "user_name-123@domain.com" — yes, the regex allows underscores and hy
+</think>

@@ -1,0 +1,21 @@
+<think>
+
+Okay, let's take a look at this. The task is to hash a certificate securely and return the hash as a hex string. The candidate implementation uses hashlib.sha256. Hmm, the specification says "securely", so I need to check if SHA-256 is considered secure enough. Well, SHA-256 is part of the SHA-2 family, which is generally considered secure for most purposes. So that's probably okay.
+
+Wait, but maybe the user expects a different algorithm? The problem statement doesn't specify, just says "securely". Since the code uses SHA-256, which is secure, that's fine. The function encodes the certificate as UTF-8, which makes sense because hashing functions work on bytes. So cert.encode('utf-8') is correct.
+
+The return value is the hexdigest, which is a string. The function's return type is annotated as str, which matches. So the code seems to meet the requirements.
+
+Are there any edge cases? What if the input cert is empty? The function would hash an empty string, which is valid. The code doesn't have any exceptions handled, but the problem statement doesn't mention handling errors, so maybe that's okay. The docstring says "the given certificate", implying that it's a valid string. So maybe no need for extra error handling here.
+
+Imports: The code imports hashlib, which is necessary. So all the required parts are there. I don't see any issues. The implementation looks correct. So the verdict should be PASS.
+
+</think>
+
+
+```json
+{
+  "verdict": "PASS",
+  "issues": []
+}
+```

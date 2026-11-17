@@ -1,0 +1,141 @@
+<think>
+
+Okay, I need to complete the check_email function. The goal is to validate an email address according to the given docstring. Let me think about the requirements.
+
+First, the function should return a tuple with a boolean indicating validity and the pattern used. So I need to define a regex pattern that covers as many valid email cases as possible. But what's the correct regex for emails?
+
+I remember that email validation can be tricky. The standard regex patterns often have some limitations but cover most common cases. Let me recall the standard pattern. Oh right, something like ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$ but maybe with more specifics.
+
+Wait, the example given is abc.123@def.ghi.com.uk. So the domain part has multiple subdomains. The regex should allow for multiple dots in the domain part. Also, the local part (before the @) can have various characters like letters, numbers, underscores, periods, plus, and hyphens. But maybe I should check for the standard allowed characters.
+
+Another thing: the regex should not allow spaces. Also, the domain part must have at least one dot, but maybe the regex allows for that. Let me structure the regex.
+
+The pattern could be:
+
+^
+[a-zA-Z0-9_.+-]+          # Local part: letters, numbers, underscores, periods, plus, hyphens
+@                         # @ symbol
+[a-zA-Z0-9-]+             # Domain part: letters, numbers, hyphens (but not starting or ending with hyphen?)
+\.[a-zA-Z0-9-]+           # TLD part: starts with a dot, then letters, numbers, hyphens
+$
+
+Wait, but the domain part might have multiple dots. Like in the example, def.ghi.com.uk. So maybe the domain part should be [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)* ?
+
+But how to structure that. Alternatively, the domain part can be split into labels separated by dots, each of which must not start or end with a hyphen. But that complicates the regex.
+
+But the problem says to cover as many cases as possible. Maybe the regex can be simplified. Let me check some references. Oh right, the standard regex for email validation is often something like:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+
+But that might not handle all cases. For example, the domain part could have multiple dots, like example.co.uk. So the domain part after the @ should be something like [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)* ?
+
+Wait, but the regex would need to capture that. So maybe the domain part is [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\. [a-zA-Z0-9-]+ ?
+
+Alternatively, maybe the regex can be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But I'm not sure. Also, the TLD should be at least two letters. But some domains have longer TLDs like .museum or .travel. But the regex can allow for that.
+
+But the problem says to cover as many cases as possible. So perhaps the regex can be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$ 
+
+But that might allow for domains like "example.com" but also "example.co.uk" because the part after the @ is [a-zA-Z0-9-]+ followed by \. and then more. Wait, no. Let me think: the regex after @ is [a-zA-Z0-9-]+ which would match "def" in the example, then the \. would match the next dot, and then [a-zA-Z0-9-.]+ would match "ghi.com.uk". But that's not correct. Because the entire domain part after @ should be something like "def.ghi.com.uk". So the regex for the domain part should be [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)* ?
+
+So the full regex would be:
+
+^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$ 
+
+But then, the TLD part must be at least one character. But that might not be correct. Also, the domain part can't start or end with a hyphen. But handling that in regex is more complex.
+
+Alternatively, using a more lenient approach. The problem says to cover as many cases as possible. So maybe the regex can be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$ 
+
+But this might not handle multiple dots in the domain. For example, if the domain is "def.ghi.com.uk", the regex would match because after the @, it's [a-zA-Z0-9-]+ which is "def", then \. which matches the next dot, and then [a-zA-Z0-9-.]+ which would be "ghi.com.uk". But that's allowed. Wait, the [a-zA-Z0-9-.]+ part allows for letters, numbers, hyphens, and dots. So the entire domain part after the @ would be something like "def.ghi.com.uk" being split into "def" (from [a-zA-Z0-9-]+) followed by \. and then "ghi.com.uk" (from [a-zA-Z0-9-.]+). That seems okay. But maybe the regex could be more precise.
+
+But perhaps the problem is that the regex is too permissive. For example, it would allow something like "user@domain..com" (two dots in a row). But according to the problem statement, we need to cover as many cases as possible. So maybe it's acceptable for the regex to be a bit lenient, but not too much.
+
+Another thing: the email should not have any spaces. The regex should ensure that the entire string is matched, so the ^ and $ are important.
+
+So, putting it all together, the regex pattern could be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+
+But wait, the part after the @ is [a-zA-Z0-9-]+ which is the first part of the domain, then a dot, then [a-zA-Z0-9-.]+. So for the example abc.123@def.ghi.com.uk, the domain part is def.ghi.com.uk. The regex would match that as follows:
+
+After the @, the first part is [a-zA-Z0-9-]+ which is "def", then \. which matches the next dot, then [a-zA-Z0-9-.]+ which is "ghi.com.uk". That's correct.
+
+But what about a domain like "sub.domain.co.uk"? The regex would match that as "sub" (from [a-zA-Z0-9-]+), then \. and then "domain.co.uk" (from [a-zA-Z0-9-.]+). Which is correct.
+
+But what about a domain with multiple dots in the TLD? Like "example.co.uk"? The regex would match that.
+
+So the pattern seems acceptable. However, there's a problem with the TLD part. For example, if the domain is "example.com", the regex would match. But if the domain is "example.c", the regex would also match, which is valid. So that's okay.
+
+Now, the function needs to return the pattern used. So the pattern is the regex string.
+
+But what about case sensitivity? The regex uses [a-zA-Z0-9...], which covers both upper and lower case. But emails are case-insensitive in the local part and domain part? Well, according to RFC 5322, the local part is case-insensitive, but the domain is case-insensitive as well. However, the regex as written is case-sensitive. But the problem says to check if the email is valid. So perhaps the regex should be case-insensitive. But the problem's example uses lowercase, but the function may need to accept uppercase letters. Wait, the regex as written includes both upper and lower case, so the email can have any case. But the regex is case-sensitive. Wait, no. The regex is written with [a-zA-Z], which matches both upper and lower case. So the regex is case-insensitive in the sense that it allows any case. But the actual matching is case-sensitive. Wait, no. The regex is case-sensitive unless the flag is set. But in the code, the re module's default is case-sensitive. So for example, if the email is "Abc@Def.com", the regex would match because [a-zA-Z] includes both. But if the regex was [a-z], it would not. So the current pattern is case-insensitive in terms of allowing both cases. So that's correct.
+
+Now, the function needs to return the pattern. So the pattern is the regex string. So the code would be:
+
+import re
+from typing import Tuple
+
+def check_email(email: str) -> Tuple[bool, str]:
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    if re.fullmatch(pattern, email):
+        return (True, pattern)
+    else:
+        return (False, pattern)
+
+Wait, but the pattern may not be correct. Let me test some examples.
+
+Test case 1: "abc.123@def.ghi.com.uk" → should return True. The regex would match.
+
+Test case 2: "user@domain.com" → True.
+
+Test case 3: "user.name+tag@domain.co.uk" → True.
+
+Test case 4: "user@sub.domain.co.uk" → True.
+
+What about "user@domain" → no, because the domain must have a dot. So the regex would not match. So that's correct.
+
+What about "user@domain.c" → yes, because the TLD is "c".
+
+What about "user@-domain.com" → the domain part after @ is [a-zA-Z0-9-]+ which would match "-domain" (but the regex allows hyphens in the domain part. Wait, the domain part after @ is [a-zA-Z0-9-]+. So if the domain is "-domain.com", then the regex would match the first part as "-domain" (since [a-zA-Z0-9-]+ allows hyphens). But according to email standards, the domain cannot start or end with a hyphen. But the problem says to cover as many cases as possible. So this regex would accept such cases, which may not be correct. But perhaps the problem expects a more lenient approach.
+
+But maybe the regex should be adjusted to prevent leading or trailing hyphens. However, that complicates the regex. For example, the domain part after @ should be something like [a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])? but that's more complex. However, the problem says to cover as many cases as possible, so perhaps it's better to use a more standard regex.
+
+Alternatively, perhaps the regex can be adjusted to handle that. But for the scope of this problem, maybe the initial pattern is acceptable.
+
+Another possible issue: the regex allows for multiple dots in the domain. For example, "user@domain..com" would be invalid, but the regex would match it? Let's see:
+
+The domain part after @ is [a-zA-Z0-9-]+ which is "domain", then \. which matches the next dot, then [a-zA-Z0-9-.]+ which would be ".com". So the entire domain would be "domain..com". But the regex would match that. However, that's invalid. So this regex is too permissive.
+
+But how to avoid that? Well, the domain part should be split into labels separated by dots. Each label must not start or end with a hyphen, and must have at least one character.
+
+But writing a regex that enforces that is more complex. For example, the domain part could be:
+
+([a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?
+
+But that's complicated. However, for the purpose of this problem, maybe the initial approach is acceptable, even if it's not 100% accurate.
+
+Alternatively, perhaps the problem expects the use of a more standard email regex. Let me think of a commonly accepted pattern.
+
+Another approach is to use the regex from the Python standard library's email validation, but that's not directly available. However, the standard regex for email validation is often something like:
+
+^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$
+
+But that's more precise. However, implementing that in the code may be better. Let me check.
+
+The local part can include more characters like ! # $ % & ' * + - / = ? ^ _ ` { | } ~. The domain part must be a valid domain with labels that don't start or end with hyphen.
+
+But for the purpose of this problem, perhaps the initial regex is acceptable. However, the user's example includes "abc.123@def.ghi.com.uk", which the initial regex would accept.
+
+But considering that the problem says to cover as many cases as possible, maybe the regex should be more comprehensive.
+
+So, perhaps the correct pattern is:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-
+</think>

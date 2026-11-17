@@ -1,0 +1,48 @@
+<think>
+
+Okay, let's take a look at the candidate implementation. The task is to encrypt data using AES in CBC mode. The function is supposed to return the encrypted data, IV, and the key used. 
+
+First, the candidate code has the correct imports: AES from Crypto.Cipher and pad from Crypto.Util.Padding. The function signature matches the required parameters and return type. But wait, the actual implementation is missing. The code provided only has the function definition and docstring, no actual code inside.
+
+So the main issue here is that the function is not implemented. The user probably forgot to include the code. But according to the task, the candidate's code is as given. So the problem is that the function doesn't do anything. 
+
+Looking at the requirements: the key is at least 64 bytes, and we need to use the prefix that matches the required length. For AES, the key size depends on the mode. Wait, AES supports key sizes of 128, 192, or 256 bits. But the problem says the key is >=64 bytes, which is 512 bits. So maybe the user is supposed to take the first 32 bytes (256 bits) since that's a valid AES key. But the task says to use the prefix that matches the required length. However, the problem statement might have a typo, but the candidate's code doesn't handle that.
+
+But since the candidate's code is empty, the main issue is that there's no implementation. So the function doesn't return anything. That's a critical error. Also, the IV is not generated. The function is supposed to return the IV, but without any code, it's impossible.
+
+So the issues are: the function is not implemented, leading to a runtime error. Also, the key handling is missing. The code doesn't take the prefix of the key. So the candidate's code is incomplete. Therefore, the verdict should be NEEDS_REVISION with high severity issues.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "encrypt_data function body",
+      "severity": "HIGH",
+      "description": "Function is not implemented. No encryption logic, IV generation, or return statements present.",
+      "fix_recommendation": "Implement AES-CBC encryption with key prefix selection, IV generation, and proper return values."
+    },
+    {
+      "location": "key handling",
+      "severity": "HIGH",
+      "description": "No code to extract the required key length from the prefix of the provided key bytes.",
+      "fix_recommendation": "Select appropriate key length (e.g., 32 bytes for AES-256) from the key's prefix as per AES requirements."
+    },
+    {
+      "location": "IV generation",
+      "severity": "HIGH",
+      "description": "No code to generate or handle the initialization vector (IV) required for CBC mode.",
+      "fix_recommendation": "Generate a random IV using AES.new() or os.urandom() and include it in the return value."
+    },
+    {
+      "location": "return values",
+      "severity": "HIGH",
+      "description": "No code to return encrypted data, IV, and key as required by the specification.",
+      "fix_recommendation": "Implement encryption process and return the three required components as a tuple."
+    }
+  ]
+}
+```

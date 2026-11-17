@@ -1,0 +1,31 @@
+<think>
+
+Okay, let's see. The user provided the original task specification, the initial implementation, and two review reports. The task is to synthesize both reviews, resolve any conflicts, and output the final module.
+
+First, I need to check the initial code. The function hash_certificate uses SHA-256 to hash a certificate string. The functional review says PASS with no issues, and the security audit also PASS with no issues. So there are no reported problems in either review.
+
+Wait, but maybe there's something missing? Let me think. The function is straightforward: encode the string to UTF-8 and hash with SHA-256. That's a secure method. But perhaps the security auditor might have wanted a different approach, like using a different hash function or adding a salt? But according to the audit report, there are no issues. So the current implementation is acceptable.
+
+Since both reviews are passing, there's no need to change the code. The user wants the final module, so I just need to present the initial implementation again. But maybe there's a hidden catch? Like, maybe the security audit didn't find any issues, but there's a potential vulnerability that wasn't caught? For example, using a fixed encoding without checking for errors. But the review says no issues, so I have to trust that.
+
+So the answer is to output the initial implementation as is. The final module is the same as the A1 Draft. No changes needed.
+
+</think>
+
+
+```python
+import hashlib
+
+
+def hash_certificate(cert: str) -> str:
+    """
+    Hash the given certificate securely and return the hash as a hexadecimal string.
+
+    Args:
+        cert (str): The certificate to be hashed.
+
+    Returns:
+        str: The securely hashed certificate as a hexadecimal string.
+    """
+    return hashlib.sha256(cert.encode('utf-8')).hexdigest()
+```

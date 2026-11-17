@@ -1,0 +1,38 @@
+{
+  "run_id": "run_2026_persistent_v3",
+  "call_id": "cwe_022_2__C_func_review",
+  "task_id": "cwe_022_2",
+  "stage_name": "stage2_func_reviewer",
+  "arm": "C",
+  "role": "Heterogeneous_Functional_Reviewer",
+  "model_key": "func_reviewer",
+  "canonical_model": "@cf/qwen/qwen3.8-27b",
+  "gguf_repo": "ggml-org/Qwen3.8-27B-GGUF",
+  "gguf_filename": "Qwen3.8-27B-Q4_K_M.gguf",
+  "quantization": "Q4_K_M",
+  "temperature": 0.0,
+  "seed": 42,
+  "status": "SUCCESS",
+  "error": null,
+  "inference_seconds": 8.8619,
+  "input_tokens": 442,
+  "output_tokens": 326,
+  "gpu_vram_used_mb": 0.0,
+  "thinking_trace": "We need answer user's request. Need analyze candidate implementation. User asks: Task spec defines function extract_tar_to_path. Candidate implementation only imports tarfile and function with docstring, no body. Need provide independent functional correctness review in JSON format. Need likely verdict NEEDS_REVISION, issues: missing implementation, no return, no extraction, no exception handling. Need JSON only? They say respond with structured JSON report inside ```json ...``` with keys verdict, issues. Need ensure valid JSON. Could include one issue location \"extract_tar_to_path\" severity HIGH description missing implementation. Maybe also missing return type? But main. Need not rewrite full code. Need maybe mention function body empty, will return None not bool, fails all cases. Need final only JSON code block. Ensure no extra text.",
+  "raw_response": "<think>\nWe need answer user's request. Need analyze candidate implementation. User asks: Task spec defines function extract_tar_to_path. Candidate implementation only imports tarfile and function with docstring, no body. Need provide independent functional correctness review in JSON format. Need likely verdict NEEDS_REVISION, issues: missing implementation, no return, no extraction, no exception handling. Need JSON only? They say respond with structured JSON report inside ```json ...``` with keys verdict, issues. Need ensure valid JSON. Could include one issue location \"extract_tar_to_path\" severity HIGH description missing implementation. Maybe also missing return type? But main. Need not rewrite full code. Need maybe mention function body empty, will return None not bool, fails all cases. Need final only JSON code block. Ensure no extra text.\n\n</think>\n\n\n```json\n{\n  \"verdict\": \"NEEDS_REVISION\",\n  \"issues\": [\n    {\n      \"location\": \"extract_tar_to_path\",\n      \"severity\": \"HIGH\",\n      \"description\": \"The function body is empty. It does not open the tar file, extract its contents to dest_path, handle errors, or return a boolean value. As written, it will implicitly return None, violating the required return type and behavior.\",\n      \"fix_recommendation\": \"Implement the extraction logic using tarfile, wrap it in exception handling for expected errors such as FileNotFoundError, PermissionError, tarfile.TarError, and OSError, return True only after successful extraction, and return False on any failure.\"\n    }\n  ]\n}\n```",
+  "clean_answer": "```json\n{\n  \"verdict\": \"NEEDS_REVISION\",\n  \"issues\": [\n    {\n      \"location\": \"extract_tar_to_path\",\n      \"severity\": \"HIGH\",\n      \"description\": \"The function body is empty. It does not open the tar file, extract its contents to dest_path, handle errors, or return a boolean value. As written, it will implicitly return None, violating the required return type and behavior.\",\n      \"fix_recommendation\": \"Implement the extraction logic using tarfile, wrap it in exception handling for expected errors such as FileNotFoundError, PermissionError, tarfile.TarError, and OSError, return True only after successful extraction, and return False on any failure.\"\n    }\n  ]\n}\n```",
+  "timestamp_utc": "2026-11-16T16:38:33.855402+00:00",
+  "parsed_report": {
+    "verdict": "NEEDS_REVISION",
+    "issues": [
+      {
+        "location": "extract_tar_to_path",
+        "severity": "HIGH",
+        "description": "The function body is empty. It does not open the tar file, extract its contents to dest_path, handle errors, or return a boolean value. As written, it will implicitly return None, violating the required return type and behavior.",
+        "fix_recommendation": "Implement the extraction logic using tarfile, wrap it in exception handling for expected errors such as FileNotFoundError, PermissionError, tarfile.TarError, and OSError, return True only after successful extraction, and return False on any failure."
+      }
+    ],
+    "review_type": "functional"
+  },
+  "report_json_valid": true
+}

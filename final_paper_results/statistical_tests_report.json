@@ -1,0 +1,324 @@
+{
+  "generated_at_utc": "2026-11-16T20:40:26.452185+00:00",
+  "n_tasks": 25,
+  "manual_audited_overrides_applied": {
+    "cwe_020_0": {
+      "nodeid": "core/py/cwe_020_0_test.py::test_get_target_for_redirect_unsafe_security",
+      "source_location": "benchmark/core/py/cwe_020_0_test.py:84-96",
+      "category": "Security"
+    },
+    "cwe_643_0": {
+      "nodeid": "core/py/cwe_643_0_test.py::test_get_student_info_unsafe_security",
+      "source_location": "benchmark/core/py/cwe_643_0_test.py:118-131",
+      "category": "Security"
+    }
+  },
+  "arm_summaries": [
+    {
+      "arm_key": "A1",
+      "arm_description": "Single-Pass Baseline (1x)",
+      "tasks_n": 25,
+      "func_pass_count": 25,
+      "func_pass_rate_pct": 100.0,
+      "func_95ci": "[86.68%, 100.0%]",
+      "sec_pass_count": 25,
+      "sec_pass_rate_pct": 100.0,
+      "sec_95ci": "[86.68%, 100.0%]",
+      "func_sec_pass_count": 25,
+      "func_sec_pass_rate_pct": 100.0,
+      "func_sec_95ci": "[86.68%, 100.0%]",
+      "total_input_tokens": 5525,
+      "total_output_tokens": 57855,
+      "total_tokens": 63380,
+      "total_inference_sec": 426.04,
+      "mean_inference_sec_per_task": 17.04,
+      "docker_eval_sec": 18.011,
+      "gpu_hours_dual_t4": 0.2367
+    },
+    {
+      "arm_key": "A2_Index0",
+      "arm_description": "A2 Selected@1 (Index0 Policy)",
+      "tasks_n": 25,
+      "func_pass_count": 24,
+      "func_pass_rate_pct": 96.0,
+      "func_95ci": "[80.46%, 99.29%]",
+      "sec_pass_count": 24,
+      "sec_pass_rate_pct": 96.0,
+      "sec_95ci": "[80.46%, 99.29%]",
+      "func_sec_pass_count": 24,
+      "func_sec_pass_rate_pct": 96.0,
+      "func_sec_95ci": "[80.46%, 99.29%]",
+      "total_input_tokens": 22100,
+      "total_output_tokens": 225452,
+      "total_tokens": 247552,
+      "total_inference_sec": 1875.15,
+      "mean_inference_sec_per_task": 75.01,
+      "docker_eval_sec": 16.883,
+      "gpu_hours_dual_t4": 1.0418
+    },
+    {
+      "arm_key": "A2_SyntaxSelected",
+      "arm_description": "A2 Selected@1 (AST Syntax Policy)",
+      "tasks_n": 25,
+      "func_pass_count": 25,
+      "func_pass_rate_pct": 100.0,
+      "func_95ci": "[86.68%, 100.0%]",
+      "sec_pass_count": 25,
+      "sec_pass_rate_pct": 100.0,
+      "sec_95ci": "[86.68%, 100.0%]",
+      "func_sec_pass_count": 25,
+      "func_sec_pass_rate_pct": 100.0,
+      "func_sec_95ci": "[86.68%, 100.0%]",
+      "total_input_tokens": 22100,
+      "total_output_tokens": 225452,
+      "total_tokens": 247552,
+      "total_inference_sec": 1875.15,
+      "mean_inference_sec_per_task": 75.01,
+      "docker_eval_sec": 18.557,
+      "gpu_hours_dual_t4": 1.0418
+    },
+    {
+      "arm_key": "A2",
+      "arm_description": "Four Independent Samples (Pass@4 Oracle)",
+      "tasks_n": 25,
+      "func_pass_count": 25,
+      "func_pass_rate_pct": 100.0,
+      "func_95ci": "[86.68%, 100.0%]",
+      "sec_pass_count": 25,
+      "sec_pass_rate_pct": 100.0,
+      "sec_95ci": "[86.68%, 100.0%]",
+      "func_sec_pass_count": 25,
+      "func_sec_pass_rate_pct": 100.0,
+      "func_sec_95ci": "[86.68%, 100.0%]",
+      "total_input_tokens": 22100,
+      "total_output_tokens": 225452,
+      "total_tokens": 247552,
+      "total_inference_sec": 1875.15,
+      "mean_inference_sec_per_task": 75.01,
+      "docker_eval_sec": 25.424,
+      "gpu_hours_dual_t4": 1.0418
+    },
+    {
+      "arm_key": "B",
+      "arm_description": "Homogeneous Dual Self-Review (Qwen3-Coder)",
+      "tasks_n": 25,
+      "func_pass_count": 24,
+      "func_pass_rate_pct": 96.0,
+      "func_95ci": "[80.46%, 99.29%]",
+      "sec_pass_count": 24,
+      "sec_pass_rate_pct": 96.0,
+      "sec_95ci": "[80.46%, 99.29%]",
+      "func_sec_pass_count": 24,
+      "func_sec_pass_rate_pct": 96.0,
+      "func_sec_95ci": "[80.46%, 99.29%]",
+      "total_input_tokens": 44698,
+      "total_output_tokens": 154153,
+      "total_tokens": 198851,
+      "total_inference_sec": 1311.25,
+      "mean_inference_sec_per_task": 52.45,
+      "docker_eval_sec": 9.662,
+      "gpu_hours_dual_t4": 0.7285
+    },
+    {
+      "arm_key": "C",
+      "arm_description": "Heterogeneous Peer Review (Qwen3.8 + DeepSeek-R1)",
+      "tasks_n": 25,
+      "func_pass_count": 24,
+      "func_pass_rate_pct": 96.0,
+      "func_95ci": "[80.46%, 99.29%]",
+      "sec_pass_count": 24,
+      "sec_pass_rate_pct": 96.0,
+      "sec_95ci": "[80.46%, 99.29%]",
+      "func_sec_pass_count": 24,
+      "func_sec_pass_rate_pct": 96.0,
+      "func_sec_95ci": "[80.46%, 99.29%]",
+      "total_input_tokens": 48599,
+      "total_output_tokens": 173219,
+      "total_tokens": 221818,
+      "total_inference_sec": 2690.92,
+      "mean_inference_sec_per_task": 107.64,
+      "docker_eval_sec": 14.005,
+      "gpu_hours_dual_t4": 1.495
+    }
+  ],
+  "cochrans_q_four_single_output_arms": {
+    "arms_included": [
+      "A1",
+      "A2_SyntaxSelected",
+      "B",
+      "C"
+    ],
+    "func": {
+      "Q_statistic": 2.0,
+      "df": 3,
+      "p_value_approx": 0.576258,
+      "significant_alpha_0_05": false
+    },
+    "sec": {
+      "Q_statistic": 2.0,
+      "df": 3,
+      "p_value_approx": 0.576258,
+      "significant_alpha_0_05": false
+    },
+    "func_sec": {
+      "Q_statistic": 2.0,
+      "df": 3,
+      "p_value_approx": 0.576258,
+      "significant_alpha_0_05": false
+    }
+  },
+  "pairwise_mcnemar_tests": {
+    "B_vs_A1": {
+      "func": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "sec": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "func_sec": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      }
+    },
+    "C_vs_A1": {
+      "func": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "sec": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "func_sec": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      }
+    },
+    "C_vs_B": {
+      "func": {
+        "n_total": 25,
+        "n11_both_pass": 23,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 1,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": 0,
+        "repair_success_rate_pct": 100.0,
+        "regression_rate_pct": 4.17,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "sec": {
+        "n_total": 25,
+        "n11_both_pass": 23,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 1,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": 0,
+        "repair_success_rate_pct": 100.0,
+        "regression_rate_pct": 4.17,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "func_sec": {
+        "n_total": 25,
+        "n11_both_pass": 23,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 1,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": 0,
+        "repair_success_rate_pct": 100.0,
+        "regression_rate_pct": 4.17,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      }
+    },
+    "C_vs_A2_SyntaxSelected": {
+      "func": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "sec": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      },
+      "func_sec": {
+        "n_total": 25,
+        "n11_both_pass": 24,
+        "n00_both_fail": 0,
+        "n01_repaired_A_to_B": 0,
+        "n10_regressed_A_to_B": 1,
+        "net_gain_tasks": -1,
+        "repair_success_rate_pct": 0.0,
+        "regression_rate_pct": 4.0,
+        "exact_p_value": 1.0,
+        "significant_alpha_0_05": false
+      }
+    }
+  }
+}

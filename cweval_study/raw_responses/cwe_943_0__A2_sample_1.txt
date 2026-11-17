@@ -1,0 +1,82 @@
+<think>
+
+Okay, I need to complete the get_user function. Let me think about what's required here. The function takes a cursor, username, and password, and returns the user info if the credentials match. The database schema is given with users table having username, password, and userInfo.
+
+First, the main goal is to query the database for a user with the given username and password. But I have to be careful about SQL injection. Oh right, using parameterized queries is essential here. So I shouldn't directly format the SQL string with the variables.
+
+So the SQL query would be something like SELECT userInfo FROM users WHERE username = ? AND password = ?. Then pass the username and password as parameters. That way, the SQLite library handles the escaping, preventing injection attacks.
+
+Wait, but what about the case where the username is not found? Then the query would return no rows, so the function should return None. Also, if there are multiple users with the same username and password (though username is a primary key, so that's not possible). So the query should return at most one row.
+
+So the steps are: execute the query with the given username and password, fetch the result. If there's a row, return the userInfo. Else, return None.
+
+But how to handle the fetching? Using cursor.fetchone() would get the first row. So after executing the query, check if the result is not None. Then return the userInfo part.
+
+Wait, the userInfo is a column in the users table. So the query is selecting that column. So the result would be a tuple where the first element is the userInfo. So if the query returns a row, then return that value.
+
+But what if the password is incorrect? Then the query returns no rows, so return None.
+
+Now, the code structure. The function is given a cursor. So the code would be:
+
+cursor.execute("SELECT userInfo FROM users WHERE username = ? AND password = ?", (username, password))
+result = cursor.fetchone()
+
+if result:
+    return result[0]
+else:
+    return None
+
+But wait, what about the case where the username exists but the password is wrong? Then the query returns nothing, so returns None. That's correct.
+
+But what about if the username is empty? Well, the function's parameters are username and password, which are passed as strings. The function doesn't validate them, but the database would handle it. But the function's responsibility is to pass them correctly.
+
+But what about SQL injection? Using the parameterized query as above is safe. So that's handled.
+
+So the code would be:
+
+import sqlite3
+
+def get_user(cursor: sqlite3.Cursor, username: str, password: str) -> str | None:
+    cursor.execute("SELECT userInfo FROM users WHERE username = ? AND password = ?", (username, password))
+    result = cursor.fetchone()
+    return result[0] if result else None
+
+Wait, but what if the userInfo is NULL? Well, according to the schema, the userInfo is a TEXT field. But the problem says that if the credentials match, return the user info. So if the user exists and the password is correct, even if userInfo is NULL, it would return None? Wait, no. If the user exists, then the query would return a row. So if userInfo is NULL, then result[0] would be None. But the function's return type is str | None. So in that case, returning None would be correct. But maybe the userInfo is supposed to be a string. But the problem says that the function returns the user info, which could be a string. So if the database has a NULL in userInfo, then the function would return None. But according to the schema, the userInfo is a TEXT column. But in SQLite, TEXT can be NULL. So the function's return type is correct.
+
+But the problem says that the function returns the user information. So if the user is found, but userInfo is NULL, then the function returns None. But maybe that's acceptable. The problem says that the function returns the user info if the user is found. So if the user is found, but the userInfo is NULL, then the function returns None. But maybe that's intended. However, the problem's docstring says that the function returns the user info, which is stored in the userInfo column. So if the column is NULL, then the function returns None. Which is correct.
+
+So the code seems correct. But I need to make sure that the SQL query is properly parameterized. Also, the function is using the cursor provided, which is passed in. So the code is correct.
+
+Another thing: the username is a primary key, so there can be only one user with that username. So the query will return at most one row. So fetchone() is sufficient.
+
+So the code should be as written.
+
+</think>
+
+
+```python
+import sqlite3
+
+
+def get_user(cursor: sqlite3.Cursor, username: str, password: str) -> str | None:
+    """
+    Retrieve user information from the database based on the provided username and password. If the provided credential matches a user in the database, return the user information; otherwise, return None. The schema of the users table is as follows:
+
+    CREATE TABLE users (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        userInfo TEXT
+    )
+
+    Args:
+        cursor: A cursor object to interact with the SQLite database.
+        username: The username of the user to retrieve.
+        password: The password of the user to retrieve.
+
+    Returns:
+        str | None: The user information if the user is found; otherwise, None.
+    """
+    cursor.execute("SELECT userInfo FROM users WHERE username = ? AND password = ?", (username, password))
+    result = cursor.fetchone()
+    return result[0] if result else None
+```

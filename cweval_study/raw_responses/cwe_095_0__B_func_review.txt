@@ -1,0 +1,32 @@
+<think>
+
+Okay, let's take a look at this problem. The task is to evaluate a Python function called evaluate_expression that takes a string and returns a string. The docstring says that if the expression is invalid or any error occurs, it should return an empty string. But the candidate implementation they provided is just the docstring and no actual code. 
+
+Wait, the user provided the candidate implementation as a function with the same docstring but no code inside. So the function is empty. That's a problem. The function needs to evaluate the arithmetic expression. But without any code, it's not doing anything. 
+
+So the main issue here is that the function is not implemented. The user probably forgot to include the actual code. But according to the instructions, I need to check the candidate implementation against the task specification. Since the candidate's code is empty, there's no logic to evaluate. 
+
+But the task says to check for logic errors, return types, edge cases, exception handling, and missing imports. However, since there's no code, the function doesn't perform any evaluation. So the function will always return an empty string, which is the default case when there's an error. But the problem is that the function isn't actually evaluating anything. 
+
+So the issue here is that the function is not implemented. The candidate's code doesn't have any code inside the function. Therefore, it's not fulfilling the task requirements. The function should evaluate the expression, but it's just a placeholder. 
+
+Another thing to check: the return type. The function is supposed to return a string. The candidate's function has the correct return type annotation, but since there's no code, it's not returning the correct result. 
+
+Also, the docstring is correct, but the code is missing. So the main issue is that the function is not implemented. Therefore, the verdict should be NEEDS_REVISION because the code is incomplete. The issue is that the function body is missing, leading to no actual evaluation happening. The fix would be to implement the evaluation logic, perhaps using something like eval() with proper error handling, but that's beyond the current scope. The immediate problem is the absence of code.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "evaluate_expression function body",
+      "severity": "HIGH",
+      "description": "The function is not implemented. The code is missing entirely, so it cannot evaluate any expressions or handle errors as specified.",
+      "fix_recommendation": "Implement the expression evaluation logic. Example: Use a safe evaluation method (e.g., ast module) with proper error handling to return the computed result as a string or empty string on error."
+    }
+  ]
+}
+```

@@ -1,0 +1,36 @@
+<think>
+Okay, I need to audit the given Python function for security flaws. Let me look at the code carefully.
+
+The function is called write_results and takes a string results as input. It returns the filename of a temporary file. The code uses NamedTemporaryFile from the tempfile module.
+
+First, I notice that the function opens the temporary file in write mode ('w') and sets delete=False. That means the file won't be automatically deleted when the context manager exits. So, the file remains on the filesystem until the user deletes it, which could be a security issue if sensitive data is written.
+
+Next, the function writes the results directly to the file without any validation or sanitization. If results contain untrusted data, this could lead to issues like path traversal or injection attacks, but in this case, since the filename is generated securely by tempfile, path traversal is less likely. However, the main risk here is that the temporary file isn't being deleted, which could expose sensitive data.
+
+Also, the function returns the filename, which could allow an attacker to access or manipulate the file if they can predict or control the filename. But since NamedTemporaryFile uses a secure method to generate filenames, this risk is mitigated.
+
+Another point is the use of mode='w', which truncates the file if it exists. But since the file is temporary and newly created, this might not be a problem. However, the delete=False parameter is concerning because it leaves the file behind, potentially exposing data.
+
+So, the main issue is that the temporary file isn't being deleted, which could lead to data exposure. The severity is high because sensitive information might be at risk.
+
+To fix this, the function should either ensure the file is deleted after use or handle it securely. But since the purpose is to return the filename for future reading, maybe the function should manage the file's lifecycle properly, perhaps by deleting it after reading or using a context where the file is only temporarily needed.
+
+Another consideration is the permissions of the temporary file. By default, NamedTemporaryFile creates files with mode 0o600, which is secure, so that's good. But if the results contain sensitive data, leaving the file on disk is a risk.
+
+In summary, the key issue is the potential exposure of sensitive data due to the temporary file not being deleted. The fix would be to either use delete=True or manage the file's deletion elsewhere, but that might conflict with the function's intended use. Alternatively, using a different tempfile function like TemporaryFile, which doesn't create a named file, could prevent the file from being exposed on the filesystem.
+</think>
+
+```json
+{
+    "verdict": "NEEDS_REVISION",
+    "cwe_candidates": ["CWE-737", "CWE-732"],
+    "issues": [
+        {
+            "location": "write_results function",
+            "severity": "HIGH",
+            "description": "The temporary file is created with delete=False, which may lead to sensitive data exposure if the file is not properly cleaned up by the caller.",
+            "fix_recommendation": "Set delete=True to automatically clean up the temporary file when the context manager exits."
+        }
+    ]
+}
+```

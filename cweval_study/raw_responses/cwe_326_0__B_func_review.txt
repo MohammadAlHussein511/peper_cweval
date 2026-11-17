@@ -1,0 +1,23 @@
+<think>
+
+Okay, let's take a look at the candidate's implementation. The task is to generate an RSA private key and return it as a PEM string. The candidate's code uses the Crypto library's RSA module.
+
+First, the function imports RSA correctly. Then, they generate a 2048-bit key with RSA.generate(2048). That seems right. Next, they export the key in PEM format using export_key with format='PEM'. The export_key method should return a bytes object, so they decode it to a string with .decode('utf-8'). That makes sense because the return type is supposed to be a string.
+
+Wait, but what if the export_key method returns a string already? No, I think in PyCryptodome, export_key returns bytes. So decoding is necessary. The code correctly does that.
+
+Are there any edge cases? Well, the function doesn't handle exceptions. For example, if key generation fails, it would throw an error. But the problem statement doesn't mention handling exceptions, just the return type. So maybe that's beyond the current scope.
+
+The docstring matches the expected output. The return is a string, which the code ensures. The code seems correct. I don't see any logic errors. The imports are there. The function is properly typed with -> str.
+
+Hmm, maybe the PEM format export is correct. The format parameter is set to 'PEM', which is the right value. So the code should work as intended. I don't see any issues here. The candidate's implementation looks correct. So the verdict should be PASS.
+
+</think>
+
+
+```json
+{
+  "verdict": "PASS",
+  "issues": []
+}
+```

@@ -1,0 +1,128 @@
+<think>
+
+Okay, I need to complete the check_email function according to the docstring. Let's see. The function should return a tuple with a boolean indicating validity and the pattern used. The example given is abc.123@def.ghi.com.uk, which is valid. So I need to create a regex pattern that covers such cases.
+
+First, I remember that email validation can be tricky. The standard regex patterns often have some variations. Let me think about the components of an email address. The local part (before the @) can have letters, numbers, dots, underscores, hyphens, and maybe some other characters. The domain part (after the @) should have a valid domain name, which includes letters, numbers, dots, and hyphens, but not starting or ending with a hyphen.
+
+Wait, but the problem says to cover as many cases as possible to avoid false negatives. So maybe I should use a more permissive regex, but still follow the standard rules. Let me recall the standard regex for emails. Oh right, the standard is complicated, but a common pattern is something like:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+
+But maybe that's not sufficient. Let me think. The local part can have more characters, like periods, underscores, etc. The domain part should have at least one dot, and the subdomains can have hyphens but not start or end with them.
+
+Alternatively, maybe I can use a regex that's more comprehensive. Let me check. For example, the regex from Django's email validation or other libraries. But since I need to write it myself, I need to make sure it's correct.
+
+Another point: the domain part must have a valid domain. So the regex for the domain part should ensure that there's at least one dot, and each part between dots is valid. But how to handle that? Maybe split the domain into parts, but with regex, it's easier to use something like [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.? but that might not be perfect.
+
+Wait, perhaps the regex pattern can be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+
+But that might not cover all cases. For example, the domain part after the @ should have at least one dot. So the domain part should be something like [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,} ?
+
+Wait, maybe the domain part can be split into multiple parts. Let me think. The domain part must have at least one dot. So the regex for the domain part could be something like:
+
+[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}
+
+But then, the entire domain part must match that. So combining it all, the full regex would be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But maybe that's too restrictive. For example, domains like "example.co.uk" would be okay. Let me test that. The domain part would be "example.co.uk" which would match [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,} ?
+
+Wait, the first part [a-zA-Z0-9-]+ would match "example", then (\.[a-zA-Z0-9-]+)* would match ".co", and then \.[a-zA-Z]{2,} would match ".uk". So yes, that would work.
+
+But what about subdomains with hyphens? Like "sub.domain.co.uk"? That would be okay. Also, the top-level domain (like .com, .org) must be at least two letters.
+
+But what about email addresses with numbers in the local part? Like "user123@domain.com" — that's allowed.
+
+So the regex pattern would be:
+
+^([a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,})$
+
+But I need to make sure that the entire email is matched. So the regex should start with ^ and end with $.
+
+So putting it all together, the regex pattern would be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But I need to make sure that the domain part is properly structured. Let me check some examples.
+
+For the example given: abc.123@def.ghi.com.uk
+
+The local part is abc.123, which matches [a-zA-Z0-9_.+-]+. The domain is def.ghi.com.uk. The regex would split the domain into def, then .ghi, then .com, then .uk. Wait, no. The domain part is [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}.
+
+So the first part [a-zA-Z0-9-]+ would match "def", then (\.[a-zA-Z0-9-]+)* would match ".ghi", then \.[a-zA-Z]{2,} would match ".com" — but then there's another .uk. Wait, that's a problem. Because the regex would require that the domain ends with a TLD of at least two letters, but in the example, the domain is def.ghi.com.uk. So the regex would need to capture that.
+
+Wait, perhaps the domain part is [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,} — but that would require that the last part is at least two letters. So in the case of "def.ghi.com.uk", the regex would have:
+
+def (from [a-zA-Z0-9-]+), then .ghi (from (\.[a-zA-Z0-9-]+)*), then .com (from \.[a-zA-Z]{2,}) — but then there's the .uk part left. So that would not match. Wait, that's a problem.
+
+Ah, right. The regex as written would require that the domain ends with a TLD of at least two letters, but the example's domain is def.ghi.com.uk, which has multiple parts. So the regex needs to allow for multiple subdomains.
+
+So maybe the domain part should be [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,} — but that would require that the last part is the TLD. So for example, "def.ghi.com.uk" would be split into:
+
+def (from [a-zA-Z0-9-]+), then .ghi (from (\.[a-zA-Z0-9-]+)*), then .com (from \.[a-zA-Z]{2,}) — but then the .uk is not matched. Wait, no. Wait, the regex for the domain part is:
+
+[a-zA-Z0-9-]+ (the first part) followed by (\.[a-zA-Z0-9-]+)* (zero or more of subdomains) and then \.[a-zA-Z]{2,} (the TLD). So for "def.ghi.com.uk", the first part is "def", then the (\.[a-zA-Z0-9-]+)* would match ".ghi", then the \.[a-zA-Z]{2,} would match ".com" — but then there's the ".uk" left. So this would not match. That's a problem.
+
+Ah, right. So the regex is wrong. So how to fix that?
+
+The correct way to match a domain with multiple subdomains is to have the entire domain part as a series of labels separated by dots, each label being [a-zA-Z0-9-]+, and the last label being at least two letters. So the domain part should be something like:
+
+([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}
+
+Wait, no. Because that would require that the last part is the TLD, but the previous parts can be any labels. So for example, "def.ghi.com.uk" would be split into "def.ghi.com" followed by ".uk". But how to capture that.
+
+Alternatively, the domain part can be:
+
+[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}
+
+But that would require that there's at least one dot before the TLD. For example, "example.com" would match, but "example.co.uk" would not. Because after the first [a-zA-Z0-9-]+ (example), then (\.[a-zA-Z0-9-]+)* would match .co, then \.[a-zA-Z]{2,} would match .uk. Wait, no. Because the entire domain is "example.co.uk". So the regex would be:
+
+[a-zA-Z0-9-]+ (example) followed by (\.[a-zA-Z0-9-]+)* (which would match .co) and then \.[a-zA-Z]{2,} (which would match .uk). So that would work. Because the entire domain is "example.co.uk" — the regex would match that.
+
+Wait, let me break it down. The domain part is:
+
+[a-zA-Z0-9-]+ (example) → matches "example"
+
+Then (\.[a-zA-Z0-9-]+)* → matches ".co" (since it's one occurrence of the group)
+
+Then \.[a-zA-Z]{2,} → matches ".uk"
+
+So the entire domain is "example.co.uk" — yes, that would match. So the regex for the domain part is correct.
+
+So the full regex would be:
+
+^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$
+
+But wait, the domain part is [a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,} — which would match "example.co.uk" as explained. So that's correct.
+
+Another test case: "user@sub.domain.co.uk" — yes, that would match.
+
+What about domains with hyphens? Like "user@domain-with-hyphen.com" — yes, the [a-zA-Z0-9-]+ allows hyphens.
+
+Now, what about the local part? The regex [a-zA-Z0-9_.+-]+ allows letters, numbers, underscores, periods, plus, and hyphens. That's acceptable. For example, "abc.123" is allowed.
+
+So the regex seems to cover the example given. Now, what about edge cases?
+
+What about an email with a single character local part? Like "a@b.c" — yes, that's valid.
+
+What about an email with multiple dots in the local part? Like "a.b.c@d.com" — yes.
+
+What about an email with a domain that has multiple subdomains? Like "user@sub.sub2.example.co.uk" — yes.
+
+Now, what about the case where the domain has a TLD with more than two letters, like ".museum"? That's allowed.
+
+But what about domains that have a TLD with two letters, like ".co"? Wait, the regex requires that the TLD is at least two letters. So ".co" is okay. But what about a TLD with three letters, like ".net"? Also okay.
+
+Now, what about the case where the domain has a hyphen in the last part? Like "user@domain.co-uk"? The regex allows that, since the TLD part is [a-zA-Z]{2,} — but "co-uk" would not match because of the hyphen. Wait, no. Because the TLD part is [a-zA-Z]{2,} — which only allows letters. So "co-uk" would not match. But that's a problem.
+
+Ah, right. Because the TLD part in the regex is [a-zA-Z]{2,}, which only allows letters. But in reality, TLDs can have hyphens? Or not? For example, some TLDs like "example.co.uk" — but the TLD is "uk", which is letters. However, some domains may have hyphens in the subdomains, but not in the TLD. For example, "sub.domain.co.uk" — the TLD is "uk", which is letters. So the regex is correct in that aspect.
+
+But what about domains like "example.com" — which is allowed. But if the domain is "example.co.uk", then the TLD is "uk", which is allowed.
+
+But if the domain is "example.co-uk", then the TLD is "co-uk" — which has a hyphen. But according to the regex, the TLD part is [a-zA-Z]{2,}, which would not match "co-uk" because of the hyphen. So that would be invalid. But is that correct?
+
+Wait, the TLD is the last part after the last dot. So in "example.co-uk", the TLD is "uk", but the part before is "co-uk". Wait, no. The domain is "example.co-uk" — the parts are "example", "co-uk". Wait, no. The domain is "example.co-uk" — the last part is "uk", and the previous part is "co-uk". Wait, no, that's not correct. The domain is split into labels. For example, "example.co-uk" would be split into "example", "co-uk". The TLD is "uk", but the previous label is "co-uk". But according to the regex, the TLD is [a-zA-Z]{2,}, which would require that the last part is letters. However, the "co-uk" is part of the domain before the TLD. Wait, no. The entire domain is "
+</think>

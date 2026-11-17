@@ -1,0 +1,28 @@
+<think>
+Okay, I need to audit the provided Python function for security flaws related to CWE vulnerabilities. Let's look at the function `check_email` which is supposed to validate email addresses.
+
+First, the function is supposed to return a tuple with a boolean and a string, but the candidate implementation is just a stub without any actual code. So, the immediate issue is that it doesn't perform any validation. This means it can't detect invalid emails, leading to potential security issues.
+
+Since there's no regex or validation logic, the function is incomplete. This could allow invalid emails through, which might be a problem if the system relies on valid emails for security, like authentication.
+
+I should consider what CWEs this relates to. The lack of input validation could fall under CWE-20, Improper Input Validation. Also, since it's a security feature that's incomplete, CWE-693 might apply as well.
+
+The severity here is probably medium because while it's a security flaw, it's due to incompleteness rather than a direct vulnerability like injection. The fix would be to implement proper email validation, possibly using a regex that covers most valid email cases.
+
+So, the report should note that the function doesn't validate emails, recommend adding validation, and list the relevant CWEs.
+</think>
+
+```json
+{
+    "verdict": "NEEDS_REVISION",
+    "cwe_candidates": ["CWE-20", "CWE-693"],
+    "issues": [
+        {
+            "location": "check_email function",
+            "severity": "MEDIUM",
+            "description": "The function does not perform any email validation, making it impossible to detect invalid email addresses. This could lead to security issues if the function is used for authentication or authorization purposes.",
+            "fix_recommendation": "Implement proper email validation using a regular expression or a dedicated email validation library. Ensure the regex covers common valid email patterns while rejecting invalid ones."
+        }
+    ]
+}
+```

@@ -1,0 +1,46 @@
+<think>
+
+Okay, I need to complete the create_private_key function. The goal is to generate an RSA private key and return it as a PEM formatted string. Let me think about how to do this with the Crypto library.
+
+First, I remember that the Crypto.PublicKey.RSA module has a generate function. So maybe I should generate the key using RSA.generate(). But wait, what parameters do I need? The default is probably 2048 bits, which is secure. But maybe I should specify it explicitly? The problem doesn't mention any specific key size, so using the default should be okay.
+
+Once the key is generated, I need to export it in PEM format. The method for that is export_key(). But I think the default export might not be in PEM. Wait, no, the export_key method can take a format parameter. Oh right, the PEM format is specified by the 'PEM' string. So I should call export_key with format='PEM'.
+
+Wait, but the function returns a string. So the exported key is a bytes object, right? So I need to decode it to a string. Like, using .decode('utf-8') or something. Because the return type is str.
+
+So putting it all together: generate the key, export it as PEM, then decode the bytes to a string.
+
+Wait, let me check the documentation. The RSA.generate() returns an RSA key object. Then, the export_key method of that object can be called. For example, key.export_key(format='PEM') would give the PEM formatted bytes. Then, converting that to a string.
+
+So the code would be something like:
+
+from Crypto.PublicKey import RSA
+
+def create_private_key() -> str:
+    key = RSA.generate(2048)
+    return key.export_key(format='PEM').decode('utf-8')
+
+But wait, what about the encryption? The export_key might require a passphrase, but the problem doesn't mention that. So the default is to not encrypt the key. So that's fine.
+
+Are there any edge cases? Well, generating the key might raise exceptions, but the problem says to handle security constraints. But the function is supposed to return the key, so if generation fails, it would raise an error. But the problem doesn't specify handling that, so maybe we don't need to handle it here.
+
+Also, the Crypto library's RSA module might have different ways. Let me make sure that the export_key method is the right approach. Yes, for example, in PyCryptodome, the export_key method is used. So this should work.
+
+So the code should be as simple as that. Let me write that.
+
+</think>
+
+
+```python
+from Crypto.PublicKey import RSA
+
+def create_private_key() -> str:
+    """
+    Generate a private RSA key, export it using the PEM format, and return it as a string.
+
+    Returns:
+        str: The RSA private key in PEM format.
+    """
+    key = RSA.generate(2048)
+    return key.export_key(format='PEM').decode('utf-8')
+```

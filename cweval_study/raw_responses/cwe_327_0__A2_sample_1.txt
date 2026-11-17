@@ -1,0 +1,53 @@
+<think>
+
+Okay, I need to complete the hash_certificate function. The docstring says to hash the certificate securely and return the hash as a hex string. Let me think about how to do this properly.
+
+First, the function takes a string 'cert' and returns a hexadecimal string. The standard way to hash in Python is using the hashlib library. The user already imported hashlib, so I can use that.
+
+But what algorithm should I use? The problem mentions "securely". So I should pick a strong hashing algorithm. SHA-256 is commonly recommended for security. So I'll use that.
+
+So the steps are: create a sha256 hash object, update it with the certificate data, then get the hex digest.
+
+Wait, but the certificate is a string. So I need to encode it into bytes first. Usually, using .encode('utf-8') would do that. Because hash functions work on bytes, not strings.
+
+So the code would be something like:
+
+hash_object = hashlib.sha256(cert.encode('utf-8'))
+return hash_object.hexdigest()
+
+But wait, are there any edge cases? Like if the input is empty? Well, the function is supposed to handle any string, including empty. But the code as written would handle that, because encoding an empty string is allowed.
+
+What about other possible errors? Like if the input is not a string? But the function's argument is typed as 'str', so it's expected to be a string. So maybe no need to handle that here. The function's responsibility is to hash the given string, whatever it is.
+
+So putting it all together, the function would be:
+
+def hash_certificate(cert: str) -> str:
+    return hashlib.sha256(cert.encode('utf-8')).hexdigest()
+
+Wait, but maybe the problem expects a different algorithm? Like SHA-1? But the user said "securely", and SHA-1 is considered insecure. So SHA-256 is better.
+
+Another thing: maybe the certificate is a PEM format, but the function is just supposed to hash it as a string. So no need to parse it, just hash the raw string.
+
+So the code seems straightforward. Let me check the hashlib documentation. Yes, the sha256 method returns a hash object, and hexdigest() gives the hex string.
+
+So the implementation should be as simple as that. I think that's all. Let me write the code.
+
+</think>
+
+
+```python
+import hashlib
+
+
+def hash_certificate(cert: str) -> str:
+    """
+    Hash the given certificate securely and return the hash as a hexadecimal string.
+
+    Args:
+        cert (str): The certificate to be hashed.
+
+    Returns:
+        str: The securely hashed certificate as a hexadecimal string.
+    """
+    return hashlib.sha256(cert.encode('utf-8')).hexdigest()
+```

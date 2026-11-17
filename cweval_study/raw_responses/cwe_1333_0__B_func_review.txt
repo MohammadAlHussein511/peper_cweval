@@ -1,0 +1,48 @@
+<think>
+
+Okay, let's see. The user provided a task specification for a Python function called check_email. The function is supposed to validate an email address and return a tuple with a boolean and the pattern used. The candidate implementation is empty except for the docstring. 
+
+First, I need to check if the candidate's code meets the requirements. The task says to cover as many cases as possible to avoid false negatives. But the current code doesn't have any logic. So the function is incomplete.
+
+Looking at the required returns: the function must return a tuple where the first element is a boolean (validity) and the second is the pattern. The candidate's code doesn't have any code inside the function, so it would throw a syntax error because the function is empty. Wait, no, in Python, if a function has no code, it's a syntax error. But the candidate's code has the docstring but no actual code. So the function is not implemented. That's a problem.
+
+The issues here are that the function is not implemented. The code is missing the regex pattern and the logic to check the email. Also, the return statement is missing. So the function would not work. 
+
+The user's instructions say to check for logic errors, return types, edge cases, exception handling, and missing imports. The candidate's code doesn't have any of the necessary code. So the verdict should be NEEDS_REVISION. 
+
+Possible issues: 
+- The function is not implemented (no code inside).
+- The regex pattern is missing.
+- The return statement is missing.
+- The code would result in a syntax error because the function is empty.
+
+So the JSON report should list these issues. The location would be the function definition. The severity is HIGH because the function doesn't work. The fix recommendation is to implement the email validation logic with a proper regex pattern and return the correct tuple.
+
+</think>
+
+
+```json
+{
+  "verdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "location": "def check_email(email: str) -> Tuple[bool, str]:",
+      "severity": "HIGH",
+      "description": "Function is not implemented. Missing regex pattern, validation logic, and return statement.",
+      "fix_recommendation": "Implement email validation logic using a comprehensive regex pattern. Add code to return a tuple (bool, str) indicating validity and the pattern used."
+    },
+    {
+      "location": "def check_email(email: str) -> Tuple[bool, str]:",
+      "severity": "HIGH",
+      "description": "No code body present. Function would raise IndentationError or return None by default.",
+      "fix_recommendation": "Add proper code implementation inside the function to process the email validation."
+    },
+    {
+      "location": "Returns: Tuple[bool, str]:",
+      "severity": "MEDIUM",
+      "description": "No actual return value implemented. Function would not meet the required output format.",
+      "fix_recommendation": "Ensure the function returns a tuple with a boolean and the regex pattern string."
+    }
+  ]
+}
+```
