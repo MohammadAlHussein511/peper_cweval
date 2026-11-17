@@ -1,0 +1,601 @@
+{
+  "status": "PROVISIONAL_REANALYSIS_PENDING_DOCKER_REPRODUCTION_AND_FULL_CHECKPOINT_AUDIT",
+  "generated_at_utc": "2026-11-17T22:14:16.114327+00:00",
+  "source_repository": "MohammadAlHussein511/peper_cweval",
+  "source_branch": "main",
+  "source_commit": "c7eb1c1c276f34a475b7e30e5f0c59bcb1c5c8bd",
+  "source_commit_message": "ملف الوورد",
+  "working_branch": "audit/research-fix",
+  "working_branch_creation_result": "EXISTS; push permission verified; branch initially matched main at source_commit",
+  "original_main_modified": false,
+  "manuscript_file": "ورقة بحث.docx",
+  "manuscript_pages": 13,
+  "manuscript_sha256": "c0ffca45b8c071cc78747451058e8204265b6b5e66a0090b2b060c5cd7d44888",
+  "manuscript_modified": false,
+  "upstream_cweval_commit": "e9a2a124c8c53679b6d8d27adfd2f6c40e7576d7",
+  "upstream_python_task_files": 25,
+  "manifest_task_files": 25,
+  "manifest_path_set_matches_upstream_python_tasks": true,
+  "n_tasks": 25,
+  "source_file_git_blobs": {
+    "cweval_local_evaluator_and_stats.py": "b88ad6529c04d53805a43206e65c5531767ce1e3",
+    "run_cweval_experiment.py": "bc758a536de391edf21570c0ee3ba123ae063ece",
+    "generation_telemetry_25tasks.csv": "be91a836f9ade90da3c2ad10b9bc25b772308375",
+    "A1_res_all.json": "38c93dbb06a9349507bdff50ab1070424ce2778b",
+    "A2_Index0_res_all.json": "8479673bbcd79090d6a856591b7afb861e0c06d1",
+    "A2_SyntaxSelected_res_all.json": "782ec0d2136f7b0905d714c14f37f411d439357f",
+    "A2_samples4_res_all.json": "291d949ab983821d8f2c4cde3beb63298d7a48e1",
+    "B_res_all.json": "a90811d696b629ba208b17939163d80a997e4372",
+    "C_res_all.json": "8c4c3e821fe031a165a41af90362a5def67de542"
+  },
+  "arm_outcomes": {
+    "A1": {
+      "functional": {
+        "pass_n": 13,
+        "denominator": 25,
+        "rate_pct": 52.0,
+        "wilson95_pct": [
+          33.5,
+          69.97
+        ]
+      },
+      "secure": {
+        "pass_n": 10,
+        "denominator": 25,
+        "rate_pct": 40.0,
+        "wilson95_pct": [
+          23.4,
+          59.26
+        ]
+      },
+      "joint": {
+        "pass_n": 9,
+        "denominator": 25,
+        "rate_pct": 36.0,
+        "wilson95_pct": [
+          20.25,
+          55.48
+        ]
+      }
+    },
+    "A2_Index0": {
+      "functional": {
+        "pass_n": 16,
+        "denominator": 25,
+        "rate_pct": 64.0,
+        "wilson95_pct": [
+          44.52,
+          79.75
+        ]
+      },
+      "secure": {
+        "pass_n": 12,
+        "denominator": 25,
+        "rate_pct": 48.0,
+        "wilson95_pct": [
+          30.03,
+          66.5
+        ]
+      },
+      "joint": {
+        "pass_n": 12,
+        "denominator": 25,
+        "rate_pct": 48.0,
+        "wilson95_pct": [
+          30.03,
+          66.5
+        ]
+      }
+    },
+    "A2_SyntaxSelected": {
+      "functional": {
+        "pass_n": 16,
+        "denominator": 25,
+        "rate_pct": 64.0,
+        "wilson95_pct": [
+          44.52,
+          79.75
+        ]
+      },
+      "secure": {
+        "pass_n": 13,
+        "denominator": 25,
+        "rate_pct": 52.0,
+        "wilson95_pct": [
+          33.5,
+          69.97
+        ]
+      },
+      "joint": {
+        "pass_n": 12,
+        "denominator": 25,
+        "rate_pct": 48.0,
+        "wilson95_pct": [
+          30.03,
+          66.5
+        ]
+      }
+    },
+    "A2_Pass4": {
+      "functional": {
+        "pass_n": 18,
+        "denominator": 25,
+        "rate_pct": 72.0,
+        "wilson95_pct": [
+          52.42,
+          85.72
+        ]
+      },
+      "secure": {
+        "pass_n": 16,
+        "denominator": 25,
+        "rate_pct": 64.0,
+        "wilson95_pct": [
+          44.52,
+          79.75
+        ]
+      },
+      "joint": {
+        "pass_n": 14,
+        "denominator": 25,
+        "rate_pct": 56.0,
+        "wilson95_pct": [
+          37.07,
+          73.33
+        ]
+      }
+    },
+    "B": {
+      "functional": {
+        "pass_n": 14,
+        "denominator": 25,
+        "rate_pct": 56.0,
+        "wilson95_pct": [
+          37.07,
+          73.33
+        ]
+      },
+      "secure": {
+        "pass_n": 16,
+        "denominator": 25,
+        "rate_pct": 64.0,
+        "wilson95_pct": [
+          44.52,
+          79.75
+        ]
+      },
+      "joint": {
+        "pass_n": 14,
+        "denominator": 25,
+        "rate_pct": 56.0,
+        "wilson95_pct": [
+          37.07,
+          73.33
+        ]
+      }
+    },
+    "C": {
+      "functional": {
+        "pass_n": 9,
+        "denominator": 25,
+        "rate_pct": 36.0,
+        "wilson95_pct": [
+          20.25,
+          55.48
+        ]
+      },
+      "secure": {
+        "pass_n": 8,
+        "denominator": 25,
+        "rate_pct": 32.0,
+        "wilson95_pct": [
+          17.21,
+          51.59
+        ]
+      },
+      "joint": {
+        "pass_n": 6,
+        "denominator": 25,
+        "rate_pct": 24.0,
+        "wilson95_pct": [
+          11.5,
+          43.43
+        ]
+      }
+    }
+  },
+  "missing_res_all_entries": {
+    "A1": [],
+    "A2_Index0": [
+      "cwe_643_0"
+    ],
+    "A2_SyntaxSelected": [],
+    "A2_Pass4": [],
+    "B": [
+      "cwe_918_0"
+    ],
+    "C": [
+      "cwe_918_1"
+    ]
+  },
+  "A2_valid_syntax_count_distribution": {
+    "2": 1,
+    "3": 3,
+    "4": 21
+  },
+  "A2_valid_syntax_candidates_total": 95,
+  "A2_attempted_candidates_total": 100,
+  "pairwise_mcnemar_exact": {
+    "B_vs_A1": {
+      "functional": {
+        "n00_both_fail": 8,
+        "n11_both_pass": 10,
+        "n01_repaired": 4,
+        "n10_regressed": 3,
+        "discordant": 7,
+        "repair_denominator": 12,
+        "regression_denominator": 13,
+        "repair_rate_pct": 33.33,
+        "regression_rate_pct": 23.08,
+        "exact_two_sided_p": 1
+      },
+      "secure": {
+        "n00_both_fail": 8,
+        "n11_both_pass": 9,
+        "n01_repaired": 7,
+        "n10_regressed": 1,
+        "discordant": 8,
+        "repair_denominator": 15,
+        "regression_denominator": 10,
+        "repair_rate_pct": 46.67,
+        "regression_rate_pct": 10.0,
+        "exact_two_sided_p": 0.0703125
+      },
+      "joint": {
+        "n00_both_fail": 10,
+        "n11_both_pass": 8,
+        "n01_repaired": 6,
+        "n10_regressed": 1,
+        "discordant": 7,
+        "repair_denominator": 16,
+        "regression_denominator": 9,
+        "repair_rate_pct": 37.5,
+        "regression_rate_pct": 11.11,
+        "exact_two_sided_p": 0.125
+      }
+    },
+    "C_vs_A1": {
+      "functional": {
+        "n00_both_fail": 8,
+        "n11_both_pass": 5,
+        "n01_repaired": 4,
+        "n10_regressed": 8,
+        "discordant": 12,
+        "repair_denominator": 12,
+        "regression_denominator": 13,
+        "repair_rate_pct": 33.33,
+        "regression_rate_pct": 61.54,
+        "exact_two_sided_p": 0.38769531
+      },
+      "secure": {
+        "n00_both_fail": 11,
+        "n11_both_pass": 4,
+        "n01_repaired": 4,
+        "n10_regressed": 6,
+        "discordant": 10,
+        "repair_denominator": 15,
+        "regression_denominator": 10,
+        "repair_rate_pct": 26.67,
+        "regression_rate_pct": 60.0,
+        "exact_two_sided_p": 0.75390625
+      },
+      "joint": {
+        "n00_both_fail": 13,
+        "n11_both_pass": 3,
+        "n01_repaired": 3,
+        "n10_regressed": 6,
+        "discordant": 9,
+        "repair_denominator": 16,
+        "regression_denominator": 9,
+        "repair_rate_pct": 18.75,
+        "regression_rate_pct": 66.67,
+        "exact_two_sided_p": 0.5078125
+      }
+    },
+    "C_vs_B": {
+      "functional": {
+        "n00_both_fail": 8,
+        "n11_both_pass": 6,
+        "n01_repaired": 3,
+        "n10_regressed": 8,
+        "discordant": 11,
+        "repair_denominator": 11,
+        "regression_denominator": 14,
+        "repair_rate_pct": 27.27,
+        "regression_rate_pct": 57.14,
+        "exact_two_sided_p": 0.2265625
+      },
+      "secure": {
+        "n00_both_fail": 7,
+        "n11_both_pass": 6,
+        "n01_repaired": 2,
+        "n10_regressed": 10,
+        "discordant": 12,
+        "repair_denominator": 9,
+        "regression_denominator": 16,
+        "repair_rate_pct": 22.22,
+        "regression_rate_pct": 62.5,
+        "exact_two_sided_p": 0.03857422
+      },
+      "joint": {
+        "n00_both_fail": 9,
+        "n11_both_pass": 4,
+        "n01_repaired": 2,
+        "n10_regressed": 10,
+        "discordant": 12,
+        "repair_denominator": 11,
+        "regression_denominator": 14,
+        "repair_rate_pct": 18.18,
+        "regression_rate_pct": 71.43,
+        "exact_two_sided_p": 0.03857422
+      }
+    },
+    "C_vs_A2_SyntaxSelected": {
+      "functional": {
+        "n00_both_fail": 7,
+        "n11_both_pass": 7,
+        "n01_repaired": 2,
+        "n10_regressed": 9,
+        "discordant": 11,
+        "repair_denominator": 9,
+        "regression_denominator": 16,
+        "repair_rate_pct": 22.22,
+        "regression_rate_pct": 56.25,
+        "exact_two_sided_p": 0.06542969
+      },
+      "secure": {
+        "n00_both_fail": 11,
+        "n11_both_pass": 7,
+        "n01_repaired": 1,
+        "n10_regressed": 6,
+        "discordant": 7,
+        "repair_denominator": 12,
+        "regression_denominator": 13,
+        "repair_rate_pct": 8.33,
+        "regression_rate_pct": 46.15,
+        "exact_two_sided_p": 0.125
+      },
+      "joint": {
+        "n00_both_fail": 13,
+        "n11_both_pass": 6,
+        "n01_repaired": 0,
+        "n10_regressed": 6,
+        "discordant": 6,
+        "repair_denominator": 13,
+        "regression_denominator": 12,
+        "repair_rate_pct": 0.0,
+        "regression_rate_pct": 50.0,
+        "exact_two_sided_p": 0.03125
+      }
+    }
+  },
+  "pairwise_holm_adjustment_across_12_tests": {
+    "C_vs_A2_SyntaxSelected.joint": {
+      "raw_p": 0.03125,
+      "holm_adjusted_p": 0.375
+    },
+    "C_vs_B.secure": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.42431642
+    },
+    "C_vs_B.joint": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.42431642
+    },
+    "C_vs_A2_SyntaxSelected.functional": {
+      "raw_p": 0.06542969,
+      "holm_adjusted_p": 0.58886721
+    },
+    "B_vs_A1.secure": {
+      "raw_p": 0.0703125,
+      "holm_adjusted_p": 0.58886721
+    },
+    "B_vs_A1.joint": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 0.875
+    },
+    "C_vs_A2_SyntaxSelected.secure": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 0.875
+    },
+    "C_vs_B.functional": {
+      "raw_p": 0.2265625,
+      "holm_adjusted_p": 1
+    },
+    "C_vs_A1.functional": {
+      "raw_p": 0.38769531,
+      "holm_adjusted_p": 1
+    },
+    "C_vs_A1.joint": {
+      "raw_p": 0.5078125,
+      "holm_adjusted_p": 1
+    },
+    "C_vs_A1.secure": {
+      "raw_p": 0.75390625,
+      "holm_adjusted_p": 1
+    },
+    "B_vs_A1.functional": {
+      "raw_p": 1,
+      "holm_adjusted_p": 1
+    }
+  },
+  "cochrans_q_four_single_output_arms": {
+    "functional": {
+      "Q": 5.77777778,
+      "df": 3,
+      "asymptotic_chi_square_p": 0.12293682,
+      "exact_conditional_permutation_p": 0.14675981,
+      "column_pass_counts": [
+        13,
+        16,
+        14,
+        9
+      ],
+      "permutation_assignments": 48922361856,
+      "n_tasks": 25
+    },
+    "secure": {
+      "Q": 9.0,
+      "df": 3,
+      "asymptotic_chi_square_p": 0.02929089,
+      "exact_conditional_permutation_p": 0.02736334,
+      "column_pass_counts": [
+        10,
+        13,
+        16,
+        8
+      ],
+      "permutation_assignments": 5435817984,
+      "n_tasks": 25
+    },
+    "joint": {
+      "Q": 9.8,
+      "df": 3,
+      "asymptotic_chi_square_p": 0.020345,
+      "exact_conditional_permutation_p": 0.01846344,
+      "column_pass_counts": [
+        9,
+        12,
+        14,
+        6
+      ],
+      "permutation_assignments": 905969664,
+      "n_tasks": 25
+    }
+  },
+  "cochrans_q_holm_adjustment_across_three_outcomes": {
+    "joint": {
+      "raw_p": 0.01846344,
+      "holm_adjusted_p": 0.05539032
+    },
+    "secure": {
+      "raw_p": 0.02736334,
+      "holm_adjusted_p": 0.05539032
+    },
+    "functional": {
+      "raw_p": 0.14675981,
+      "holm_adjusted_p": 0.14675981
+    }
+  },
+  "holm_adjustment_across_all_15_tests_sensitivity": {
+    "Cochran_Q.joint": {
+      "raw_p": 0.01846344,
+      "holm_adjusted_p": 0.2769516
+    },
+    "Cochran_Q.secure": {
+      "raw_p": 0.02736334,
+      "holm_adjusted_p": 0.38308676
+    },
+    "C_vs_A2_SyntaxSelected.joint": {
+      "raw_p": 0.03125,
+      "holm_adjusted_p": 0.40625
+    },
+    "C_vs_B.secure": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.46289064
+    },
+    "C_vs_B.joint": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.46289064
+    },
+    "C_vs_A2_SyntaxSelected.functional": {
+      "raw_p": 0.06542969,
+      "holm_adjusted_p": 0.6542969
+    },
+    "B_vs_A1.secure": {
+      "raw_p": 0.0703125,
+      "holm_adjusted_p": 0.6542969
+    },
+    "B_vs_A1.joint": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A2_SyntaxSelected.secure": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 1.0
+    },
+    "Cochran_Q.functional": {
+      "raw_p": 0.14675981,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_B.functional": {
+      "raw_p": 0.2265625,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.functional": {
+      "raw_p": 0.38769531,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.joint": {
+      "raw_p": 0.5078125,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.secure": {
+      "raw_p": 0.75390625,
+      "holm_adjusted_p": 1.0
+    },
+    "B_vs_A1.functional": {
+      "raw_p": 1.0,
+      "holm_adjusted_p": 1.0
+    }
+  },
+  "review_json_validity_from_telemetry": {
+    "B_functional": 24,
+    "B_security": 25,
+    "C_functional": 20,
+    "C_security": 25,
+    "of": 25
+  },
+  "checkpoint_examples": {
+    "writer_and_B_reviewer_sample": "@cf/qwen/qwen3-30b-a3b-fp8",
+    "C_functional_reviewer_sample": "@cf/qwen/qwen3.8-27b",
+    "C_security_reviewer_configured": "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+    "note": "Exact provider IDs are recorded in sampled checkpoints and configuration; a complete 275-record model/fallback tally remains to be generated from the local repository clone."
+  },
+  "manuscript_claim_audit": {
+    "abstract_baseline_and_selected_100_percent": "CONTRADICTED_BY_RAW_RES_ALL",
+    "manuscript_A1_counts_25_of_25": "Corrected to functional 13/25, secure 10/25, joint 9/25",
+    "manuscript_A2_Index0_96_percent": "Corrected to functional 16/25, secure 12/25, joint 12/25",
+    "manuscript_A2_SyntaxSelected_100_percent": "Corrected to functional 16/25, secure 13/25, joint 12/25",
+    "manuscript_A2_Pass4_100_percent": "Corrected to functional 18/25, secure 16/25, joint 14/25",
+    "manuscript_B_96_percent": "Corrected to functional 14/25, secure 16/25, joint 14/25",
+    "manuscript_C_96_percent": "Corrected to functional 9/25, secure 8/25, joint 6/25",
+    "manuscript_cochran_q_2_and_p_0_5763": "Invalid under correctly decoded results; see exact conditional p-values",
+    "manuscript_repair_and_regression_counts": "Contradicted; see paired McNemar tables",
+    "manual_security_overrides": "Not applied and unnecessary as candidate-score overrides: official tests are marker-tagged; *_unsafe_security helpers are not candidate oracles and are excluded by the pinned runner",
+    "compute_matched_title": "Overstates evidence; the arms are logical-call-count matched (4 calls per A2/B/C task path), not matched on token budget, model FLOPs, or latency",
+    "full_python_task_set": "SUPPORTED: the pinned upstream commit has exactly 25 Python *_task.py files and the manifest path set matches all 25",
+    "zero_leak_sanitization": "Pipeline source implements marker truncation and AST function-body checks; local prompt hash and export/checkpoint provenance audit still needs to run over the mounted repo"
+  },
+  "execution_status": {
+    "corrected_analysis_v2_unit_tests": "13/13 passed (including empty-fallback-issues regression test)",
+    "synthetic_end_to_end_analysis_fixture": "passed",
+    "official_cweval_docker_rerun": "NOT_RUN_DOCKER_NOT_AVAILABLE_IN_THIS_EXECUTION_ENVIRONMENT",
+    "full_checkpoint_audit": "PENDING_RUN_AGAINST_COMPLETE_LOCAL_REPOSITORY_TREE",
+    "candidate_export_to_checkpoint_hash_audit": "IMPLEMENTED_IN_ANALYZER_V2_NOT_YET_RUN_ON_FULL_REPO",
+    "prompt_manifest_hash_audit": "IMPLEMENTED_IN_ANALYZER_V2_NOT_YET_RUN_ON_FULL_REPO",
+    "llm_generation_calls_repeated": false,
+    "manuscript_written_or_edited": false
+  },
+  "interpretation_limits": [
+    "These are re-analysed stored evaluator outputs, not yet independently reproduced by rerunning the pinned Docker evaluator.",
+    "Missing result entries are counted as end-to-end failures in the fixed denominator N=25 and also reported as missing evaluation coverage.",
+    "The A2 Pass@4 result is the observed event that at least one of the four attempted samples passes; syntax-invalid samples count as failures. The 25-task denominator is retained.",
+    "The 12 pairwise exact McNemar tests are Holm-adjusted as one family. The three omnibus conditional permutation tests are also Holm-adjusted as a separate family; a combined 15-test adjustment is supplied as a conservative sensitivity analysis.",
+    "No primary outcome is explicitly predeclared in the manuscript version supplied.",
+    "Compute equality cannot be claimed from equal logical call counts alone; token volume and elapsed inference time differ materially.",
+    "The original checkpoints do not record finish_reason/stop_reason, so outputs at the 3072-token cap cannot be conclusively classified as truncated."
+  ],
+  "working_branch_base_commit": "c7eb1c1c276f34a475b7e30e5f0c59bcb1c5c8bd",
+  "repository_write_permission_verified": true
+}
