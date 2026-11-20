@@ -1,0 +1,912 @@
+{
+  "analysis_version": "1.1.0",
+  "generated_at_utc": "2026-11-19T14:19:18.246333+00:00",
+  "n_tasks": 25,
+  "metric_definitions": {
+    "functional": "CWEval functional oracle pass",
+    "secure": "CWEval security oracle pass",
+    "func_secure": "CWEval joint functional AND security pass",
+    "A2_Pass4": "At least one passing result among four generation attempts; syntax-invalid attempts count as non-passing; denominator remains all 25 tasks.",
+    "missing_results": "Counted as end-to-end failures in the 25-task denominator and reported separately as missing evaluation coverage."
+  },
+  "input_sha256": {
+    "final_paper_results\\extracted_bundle\\generation_telemetry_25tasks.csv": "27476dbdbbde182e4d67d6265847e094d4028dcbf98c21337828229a6c1de6d0",
+    "cweval_study\\tasks_25_manifest.json": "e2ad674252214046727c013966970293c32e32bb9137bd69f9f09927563fd499",
+    "final_paper_results\\extracted_bundle\\evals\\arm_A1_baseline\\res_all.json": "b76e0b3d138de9fafc96ed7655e3ab6eea1af68a0f4d1ab649b2345c9f397901",
+    "final_paper_results\\extracted_bundle\\evals\\arm_A2_Index0\\res_all.json": "a02928fbb870e948658b464ffa9e54a369242efd1d99cdb78d538a6b95bec8ef",
+    "final_paper_results\\extracted_bundle\\evals\\arm_A2_SyntaxSelected\\res_all.json": "a574ac19fd329932223e6f7d2133da3d2d2ae2488d7e36480b003e8e16f5a201",
+    "final_paper_results\\extracted_bundle\\evals\\arm_B_homogeneous\\res_all.json": "f2242148234f4a31c931c29bc2c13d01bdb612a5092635bfbfc6017b7987d003",
+    "final_paper_results\\extracted_bundle\\evals\\arm_C_heterogeneous\\res_all.json": "858279d0ca9b159bb17b730f7e802811bc64d6eceec51f750a1ce5db251a150c",
+    "final_paper_results\\extracted_bundle\\evals\\arm_A2_samples4\\res_all.json": "423fad39112e3570297f651b1b2a990f94eb22cbbf63f059830df4c1f6fa33ae",
+    "cweval_study\\environment_manifest.json": "3f03c20fa7d923aa28c52b103100f938ff9c62fdc60b1607dc106034b76b093a",
+    "cweval_study\\stage_load_metrics.json": "43a4ad9e6374496aa78180b2da6f51374b1cd3b38a0ef3fd399575781866ef3c"
+  },
+  "manifest_prompt_audit": {
+    "manifest_present": true,
+    "tasks_checked": 25,
+    "prompt_sha256_mismatches": [],
+    "prompt_ast_syntax_errors": [],
+    "solution_marker_present_in_prompt": [],
+    "raw_task_sha256_validation": "not_performed_without_pinned_benchmark_checkout"
+  },
+  "candidate_export_provenance_audit": {
+    "exported_task_candidates_checked": 225,
+    "by_arm": {
+      "A1": {
+        "matched": 25
+      },
+      "A2_Index0": {
+        "matched": 25
+      },
+      "A2_SyntaxSelected": {
+        "matched": 25
+      },
+      "A2_Pass4": {
+        "matched": 100
+      },
+      "B": {
+        "matched": 25
+      },
+      "C": {
+        "matched": 25
+      }
+    },
+    "problems": []
+  },
+  "arm_summaries": [
+    {
+      "arm": "A1",
+      "tasks_denominator": 25,
+      "evaluation_coverage_n": 25,
+      "missing_evaluation_n": 0,
+      "functional_pass_n": 13,
+      "functional_rate_pct": 52.0,
+      "functional_wilson95_low_pct": 33.5,
+      "functional_wilson95_high_pct": 69.97,
+      "secure_pass_n": 10,
+      "secure_rate_pct": 40.0,
+      "secure_wilson95_low_pct": 23.4,
+      "secure_wilson95_high_pct": 59.26,
+      "func_secure_pass_n": 9,
+      "func_secure_rate_pct": 36.0,
+      "func_secure_wilson95_low_pct": 20.25,
+      "func_secure_wilson95_high_pct": 55.48
+    },
+    {
+      "arm": "A2_Index0",
+      "tasks_denominator": 25,
+      "evaluation_coverage_n": 24,
+      "missing_evaluation_n": 1,
+      "functional_pass_n": 16,
+      "functional_rate_pct": 64.0,
+      "functional_wilson95_low_pct": 44.52,
+      "functional_wilson95_high_pct": 79.75,
+      "secure_pass_n": 12,
+      "secure_rate_pct": 48.0,
+      "secure_wilson95_low_pct": 30.03,
+      "secure_wilson95_high_pct": 66.5,
+      "func_secure_pass_n": 12,
+      "func_secure_rate_pct": 48.0,
+      "func_secure_wilson95_low_pct": 30.03,
+      "func_secure_wilson95_high_pct": 66.5
+    },
+    {
+      "arm": "A2_SyntaxSelected",
+      "tasks_denominator": 25,
+      "evaluation_coverage_n": 25,
+      "missing_evaluation_n": 0,
+      "functional_pass_n": 16,
+      "functional_rate_pct": 64.0,
+      "functional_wilson95_low_pct": 44.52,
+      "functional_wilson95_high_pct": 79.75,
+      "secure_pass_n": 13,
+      "secure_rate_pct": 52.0,
+      "secure_wilson95_low_pct": 33.5,
+      "secure_wilson95_high_pct": 69.97,
+      "func_secure_pass_n": 12,
+      "func_secure_rate_pct": 48.0,
+      "func_secure_wilson95_low_pct": 30.03,
+      "func_secure_wilson95_high_pct": 66.5
+    },
+    {
+      "arm": "A2_Pass4",
+      "tasks_denominator": 25,
+      "evaluation_coverage_n": 25,
+      "missing_evaluation_n": 0,
+      "functional_pass_n": 18,
+      "functional_rate_pct": 72.0,
+      "functional_wilson95_low_pct": 52.42,
+      "functional_wilson95_high_pct": 85.72,
+      "secure_pass_n": 16,
+      "secure_rate_pct": 64.0,
+      "secure_wilson95_low_pct": 44.52,
+      "secure_wilson95_high_pct": 79.75,
+      "func_secure_pass_n": 14,
+      "func_secure_rate_pct": 56.0,
+      "func_secure_wilson95_low_pct": 37.07,
+      "func_secure_wilson95_high_pct": 73.33
+    },
+    {
+      "arm": "B",
+      "tasks_denominator": 25,
+      "evaluation_coverage_n": 24,
+      "missing_evaluation_n": 1,
+      "functional_pass_n": 14,
+      "functional_rate_pct": 56.0,
+      "functional_wilson95_low_pct": 37.07,
+      "functional_wilson95_high_pct": 73.33,
+      "secure_pass_n": 16,
+      "secure_rate_pct": 64.0,
+      "secure_wilson95_low_pct": 44.52,
+      "secure_wilson95_high_pct": 79.75,
+      "func_secure_pass_n": 14,
+      "func_secure_rate_pct": 56.0,
+      "func_secure_wilson95_low_pct": 37.07,
+      "func_secure_wilson95_high_pct": 73.33
+    },
+    {
+      "arm": "C",
+      "tasks_denominator": 25,
+      "evaluation_coverage_n": 24,
+      "missing_evaluation_n": 1,
+      "functional_pass_n": 9,
+      "functional_rate_pct": 36.0,
+      "functional_wilson95_low_pct": 20.25,
+      "functional_wilson95_high_pct": 55.48,
+      "secure_pass_n": 8,
+      "secure_rate_pct": 32.0,
+      "secure_wilson95_low_pct": 17.21,
+      "secure_wilson95_high_pct": 51.59,
+      "func_secure_pass_n": 6,
+      "func_secure_rate_pct": 24.0,
+      "func_secure_wilson95_low_pct": 11.5,
+      "func_secure_wilson95_high_pct": 43.43
+    }
+  ],
+  "missing_evaluation_tasks": {
+    "A1": [],
+    "A2_Index0": [
+      "cwe_643_0"
+    ],
+    "A2_SyntaxSelected": [],
+    "B": [
+      "cwe_918_0"
+    ],
+    "C": [
+      "cwe_918_1"
+    ]
+  },
+  "unexplained_missing_results_despite_syntax_validity": {
+    "A1": [],
+    "B": [],
+    "C": []
+  },
+  "a2_valid_syntax_sample_distribution": {
+    "4": 21,
+    "3": 3,
+    "2": 1
+  },
+  "a2_tasks_with_zero_syntax_valid_samples": 0,
+  "a2_evaluated_candidates_total": 95,
+  "telemetry_quality": {
+    "A1_syntax_valid_n": 25,
+    "A2_attempts_total": 100,
+    "A2_syntax_valid_candidates_total": 95,
+    "A2_syntax_invalid_attempts_total": 5,
+    "B_functional_review_json_valid_n": 24,
+    "B_security_review_json_valid_n": 25,
+    "B_final_syntax_valid_n": 24,
+    "C_functional_review_json_valid_n": 20,
+    "C_security_review_json_valid_n": 25,
+    "C_final_syntax_valid_n": 24
+  },
+  "compute_accounting": {
+    "A1": {
+      "input_tokens": 5525,
+      "output_tokens": 57855,
+      "generation_seconds": 426.0412
+    },
+    "A2_four_attempts": {
+      "input_tokens": 22100,
+      "output_tokens": 225452,
+      "generation_seconds": 1875.151
+    },
+    "B_end_to_end_including_shared_A1_draft": {
+      "input_tokens": 44698,
+      "output_tokens": 154153,
+      "generation_seconds": 1311.25
+    },
+    "C_end_to_end_including_shared_A1_draft": {
+      "input_tokens": 48599,
+      "output_tokens": 173219,
+      "generation_seconds": 2690.9198
+    },
+    "B_incremental_review_and_merge_only": {
+      "input_tokens": 39173,
+      "output_tokens": 96298,
+      "generation_seconds": 885.2088,
+      "note": "Incremental overhead excludes the shared A1 draft; end-to-end cost above includes it."
+    },
+    "C_incremental_review_and_merge_only": {
+      "input_tokens": 43074,
+      "output_tokens": 115364,
+      "generation_seconds": 2264.8786,
+      "note": "Incremental overhead excludes the shared A1 draft; end-to-end cost above includes it."
+    }
+  },
+  "pairwise_mcnemar_exact": {
+    "B_vs_A1": {
+      "functional": {
+        "n_total": 25,
+        "both_fail": 8,
+        "both_pass": 10,
+        "repaired_A_to_B": 4,
+        "regressed_A_to_B": 3,
+        "discordant": 7,
+        "repair_denominator_A_failures": 12,
+        "regression_denominator_A_passes": 13,
+        "repair_rate_pct": 33.33,
+        "regression_rate_pct": 23.08,
+        "exact_two_sided_p": 1.0
+      },
+      "secure": {
+        "n_total": 25,
+        "both_fail": 8,
+        "both_pass": 9,
+        "repaired_A_to_B": 7,
+        "regressed_A_to_B": 1,
+        "discordant": 8,
+        "repair_denominator_A_failures": 15,
+        "regression_denominator_A_passes": 10,
+        "repair_rate_pct": 46.67,
+        "regression_rate_pct": 10.0,
+        "exact_two_sided_p": 0.0703125
+      },
+      "func_secure": {
+        "n_total": 25,
+        "both_fail": 10,
+        "both_pass": 8,
+        "repaired_A_to_B": 6,
+        "regressed_A_to_B": 1,
+        "discordant": 7,
+        "repair_denominator_A_failures": 16,
+        "regression_denominator_A_passes": 9,
+        "repair_rate_pct": 37.5,
+        "regression_rate_pct": 11.11,
+        "exact_two_sided_p": 0.125
+      }
+    },
+    "C_vs_A1": {
+      "functional": {
+        "n_total": 25,
+        "both_fail": 8,
+        "both_pass": 5,
+        "repaired_A_to_B": 4,
+        "regressed_A_to_B": 8,
+        "discordant": 12,
+        "repair_denominator_A_failures": 12,
+        "regression_denominator_A_passes": 13,
+        "repair_rate_pct": 33.33,
+        "regression_rate_pct": 61.54,
+        "exact_two_sided_p": 0.38769531
+      },
+      "secure": {
+        "n_total": 25,
+        "both_fail": 11,
+        "both_pass": 4,
+        "repaired_A_to_B": 4,
+        "regressed_A_to_B": 6,
+        "discordant": 10,
+        "repair_denominator_A_failures": 15,
+        "regression_denominator_A_passes": 10,
+        "repair_rate_pct": 26.67,
+        "regression_rate_pct": 60.0,
+        "exact_two_sided_p": 0.75390625
+      },
+      "func_secure": {
+        "n_total": 25,
+        "both_fail": 13,
+        "both_pass": 3,
+        "repaired_A_to_B": 3,
+        "regressed_A_to_B": 6,
+        "discordant": 9,
+        "repair_denominator_A_failures": 16,
+        "regression_denominator_A_passes": 9,
+        "repair_rate_pct": 18.75,
+        "regression_rate_pct": 66.67,
+        "exact_two_sided_p": 0.5078125
+      }
+    },
+    "C_vs_B": {
+      "functional": {
+        "n_total": 25,
+        "both_fail": 8,
+        "both_pass": 6,
+        "repaired_A_to_B": 3,
+        "regressed_A_to_B": 8,
+        "discordant": 11,
+        "repair_denominator_A_failures": 11,
+        "regression_denominator_A_passes": 14,
+        "repair_rate_pct": 27.27,
+        "regression_rate_pct": 57.14,
+        "exact_two_sided_p": 0.2265625
+      },
+      "secure": {
+        "n_total": 25,
+        "both_fail": 7,
+        "both_pass": 6,
+        "repaired_A_to_B": 2,
+        "regressed_A_to_B": 10,
+        "discordant": 12,
+        "repair_denominator_A_failures": 9,
+        "regression_denominator_A_passes": 16,
+        "repair_rate_pct": 22.22,
+        "regression_rate_pct": 62.5,
+        "exact_two_sided_p": 0.03857422
+      },
+      "func_secure": {
+        "n_total": 25,
+        "both_fail": 9,
+        "both_pass": 4,
+        "repaired_A_to_B": 2,
+        "regressed_A_to_B": 10,
+        "discordant": 12,
+        "repair_denominator_A_failures": 11,
+        "regression_denominator_A_passes": 14,
+        "repair_rate_pct": 18.18,
+        "regression_rate_pct": 71.43,
+        "exact_two_sided_p": 0.03857422
+      }
+    },
+    "C_vs_A2_SyntaxSelected": {
+      "functional": {
+        "n_total": 25,
+        "both_fail": 7,
+        "both_pass": 7,
+        "repaired_A_to_B": 2,
+        "regressed_A_to_B": 9,
+        "discordant": 11,
+        "repair_denominator_A_failures": 9,
+        "regression_denominator_A_passes": 16,
+        "repair_rate_pct": 22.22,
+        "regression_rate_pct": 56.25,
+        "exact_two_sided_p": 0.06542969
+      },
+      "secure": {
+        "n_total": 25,
+        "both_fail": 11,
+        "both_pass": 7,
+        "repaired_A_to_B": 1,
+        "regressed_A_to_B": 6,
+        "discordant": 7,
+        "repair_denominator_A_failures": 12,
+        "regression_denominator_A_passes": 13,
+        "repair_rate_pct": 8.33,
+        "regression_rate_pct": 46.15,
+        "exact_two_sided_p": 0.125
+      },
+      "func_secure": {
+        "n_total": 25,
+        "both_fail": 13,
+        "both_pass": 6,
+        "repaired_A_to_B": 0,
+        "regressed_A_to_B": 6,
+        "discordant": 6,
+        "repair_denominator_A_failures": 13,
+        "regression_denominator_A_passes": 12,
+        "repair_rate_pct": 0.0,
+        "regression_rate_pct": 50.0,
+        "exact_two_sided_p": 0.03125
+      }
+    }
+  },
+  "pairwise_holm_adjustment_across_12_tests": {
+    "C_vs_A2_SyntaxSelected.func_secure": {
+      "raw_p": 0.03125,
+      "holm_adjusted_p": 0.375
+    },
+    "C_vs_B.secure": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.42431642
+    },
+    "C_vs_B.func_secure": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.42431642
+    },
+    "C_vs_A2_SyntaxSelected.functional": {
+      "raw_p": 0.06542969,
+      "holm_adjusted_p": 0.58886721
+    },
+    "B_vs_A1.secure": {
+      "raw_p": 0.0703125,
+      "holm_adjusted_p": 0.58886721
+    },
+    "B_vs_A1.func_secure": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 0.875
+    },
+    "C_vs_A2_SyntaxSelected.secure": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 0.875
+    },
+    "C_vs_B.functional": {
+      "raw_p": 0.2265625,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.functional": {
+      "raw_p": 0.38769531,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.func_secure": {
+      "raw_p": 0.5078125,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.secure": {
+      "raw_p": 0.75390625,
+      "holm_adjusted_p": 1.0
+    },
+    "B_vs_A1.functional": {
+      "raw_p": 1.0,
+      "holm_adjusted_p": 1.0
+    }
+  },
+  "cochrans_q_holm_adjustment_across_3_outcomes": {
+    "func_secure": {
+      "raw_p": 0.01846344,
+      "holm_adjusted_p": 0.05539032
+    },
+    "secure": {
+      "raw_p": 0.02736334,
+      "holm_adjusted_p": 0.05539032
+    },
+    "functional": {
+      "raw_p": 0.14675981,
+      "holm_adjusted_p": 0.14675981
+    }
+  },
+  "holm_adjustment_across_all_15_reported_tests_sensitivity": {
+    "Cochran_Q.func_secure": {
+      "raw_p": 0.01846344,
+      "holm_adjusted_p": 0.2769516
+    },
+    "Cochran_Q.secure": {
+      "raw_p": 0.02736334,
+      "holm_adjusted_p": 0.38308676
+    },
+    "C_vs_A2_SyntaxSelected.func_secure": {
+      "raw_p": 0.03125,
+      "holm_adjusted_p": 0.40625
+    },
+    "C_vs_B.secure": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.46289064
+    },
+    "C_vs_B.func_secure": {
+      "raw_p": 0.03857422,
+      "holm_adjusted_p": 0.46289064
+    },
+    "C_vs_A2_SyntaxSelected.functional": {
+      "raw_p": 0.06542969,
+      "holm_adjusted_p": 0.6542969
+    },
+    "B_vs_A1.secure": {
+      "raw_p": 0.0703125,
+      "holm_adjusted_p": 0.6542969
+    },
+    "B_vs_A1.func_secure": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A2_SyntaxSelected.secure": {
+      "raw_p": 0.125,
+      "holm_adjusted_p": 1.0
+    },
+    "Cochran_Q.functional": {
+      "raw_p": 0.14675981,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_B.functional": {
+      "raw_p": 0.2265625,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.functional": {
+      "raw_p": 0.38769531,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.func_secure": {
+      "raw_p": 0.5078125,
+      "holm_adjusted_p": 1.0
+    },
+    "C_vs_A1.secure": {
+      "raw_p": 0.75390625,
+      "holm_adjusted_p": 1.0
+    },
+    "B_vs_A1.functional": {
+      "raw_p": 1.0,
+      "holm_adjusted_p": 1.0
+    }
+  },
+  "cochrans_q_four_single_output_arms": {
+    "arms": [
+      "A1",
+      "A2_SyntaxSelected",
+      "B",
+      "C"
+    ],
+    "functional": {
+      "Q": 5.77777778,
+      "df": 3,
+      "asymptotic_chi_square_p": 0.12293682,
+      "column_pass_counts": [
+        13,
+        16,
+        14,
+        9
+      ],
+      "n_tasks": 25,
+      "exact_conditional_permutation_p": 0.14675981,
+      "permutation_assignments": 48922361856
+    },
+    "secure": {
+      "Q": 9.0,
+      "df": 3,
+      "asymptotic_chi_square_p": 0.02929089,
+      "column_pass_counts": [
+        10,
+        13,
+        16,
+        8
+      ],
+      "n_tasks": 25,
+      "exact_conditional_permutation_p": 0.02736334,
+      "permutation_assignments": 5435817984
+    },
+    "func_secure": {
+      "Q": 9.8,
+      "df": 3,
+      "asymptotic_chi_square_p": 0.020345,
+      "column_pass_counts": [
+        9,
+        12,
+        14,
+        6
+      ],
+      "n_tasks": 25,
+      "exact_conditional_permutation_p": 0.01846344,
+      "permutation_assignments": 905969664
+    }
+  },
+  "compute_cost_ratios_vs_A1": {
+    "A2_four_attempts": {
+      "total_token_ratio_vs_A1": 3.9058,
+      "generation_time_ratio_vs_A1": 4.4013
+    },
+    "B_end_to_end": {
+      "total_token_ratio_vs_A1": 3.1374,
+      "generation_time_ratio_vs_A1": 3.0778
+    },
+    "C_end_to_end": {
+      "total_token_ratio_vs_A1": 3.4998,
+      "generation_time_ratio_vs_A1": 6.3161
+    }
+  },
+  "environment_manifest": {
+    "run_id": "run_2026_persistent_v3",
+    "timestamp_utc": "2026-11-16T18:41:38.497741+00:00",
+    "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "is_kaggle": false,
+    "is_colab": false,
+    "persistent_work_dir": "C:\\cweval_paper\\cweval_study",
+    "system_ram_gb": 12.7,
+    "global_seed": 42,
+    "cweval_pinned_commit": "e9a2a124c8c53679b6d8d27adfd2f6c40e7576d7",
+    "cweval_docker_digest": "co1lin/cweval@sha256:2d28261cc26838e20b69ce28a742b376a7c420b2f9591b32b95922e2794413d0",
+    "gpus": [
+      {
+        "index": "0",
+        "name": "NVIDIA GeForce MX550",
+        "memory_total": "2048 MiB",
+        "compute_cap": "7.5",
+        "driver_version": "516.40"
+      }
+    ],
+    "disk_working_free_gb": 156.82,
+    "disk_tmp_free_gb": 156.82
+  },
+  "stage_load_metrics": {
+    "stage1_writer": {
+      "model_load_duration_sec": 0.0,
+      "gpu_offload_verified": true
+    },
+    "stage2_func_reviewer": {
+      "model_load_duration_sec": 0.0,
+      "gpu_offload_verified": true
+    },
+    "stage3_sec_reviewer": {
+      "model_load_duration_sec": 0.0,
+      "gpu_offload_verified": true
+    },
+    "stage4_writer_merge": {
+      "model_load_duration_sec": 0.0,
+      "gpu_offload_verified": true
+    }
+  },
+  "checkpoint_audit": {
+    "checkpoint_files_found": 275,
+    "checkpoint_records_parsed": 275,
+    "unreadable_json_files": 0,
+    "unique_call_ids": 275,
+    "duplicate_call_ids": {},
+    "model_id_counts": {
+      "@cf/qwen/qwen3-30b-a3b-fp8": 225,
+      "@cf/qwen/qwen3.8-27b": 25,
+      "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b": 25
+    },
+    "unexpected_model_ids_by_role_vs_declared_protocol": {},
+    "model_ids_by_arm_and_role": {
+      "A1 / Writer_Initial": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "A2 / Writer_Sample_0": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "A2 / Writer_Sample_1": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "A2 / Writer_Sample_2": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "A2 / Writer_Sample_3": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "B / Homogeneous_Functional_Reviewer": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "B / Homogeneous_Security_Auditor": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "B / Writer_Merger_B": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      },
+      "C / Heterogeneous_Functional_Reviewer": {
+        "@cf/qwen/qwen3.8-27b": 25
+      },
+      "C / Heterogeneous_Security_Auditor": {
+        "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b": 25
+      },
+      "C / Writer_Merger_C": {
+        "@cf/qwen/qwen3-30b-a3b-fp8": 25
+      }
+    },
+    "call_status_counts": {
+      "SUCCESS": 275
+    },
+    "output_token_counts": {
+      "3072": 82,
+      "at_3072_cap": 82,
+      "713": 1,
+      "1663": 1,
+      "712": 1,
+      "678": 1,
+      "2815": 1,
+      "1634": 1,
+      "473": 1,
+      "866": 1,
+      "2701": 1,
+      "1996": 1,
+      "519": 1,
+      "2210": 1,
+      "326": 1,
+      "589": 1,
+      "703": 1,
+      "2513": 1,
+      "1371": 1,
+      "586": 1,
+      "1227": 1,
+      "856": 1,
+      "1015": 1,
+      "753": 1,
+      "1130": 1,
+      "872": 1,
+      "510": 1,
+      "518": 1,
+      "554": 1,
+      "541": 1,
+      "334": 1,
+      "571": 1,
+      "1790": 1,
+      "306": 1,
+      "862": 1,
+      "2357": 1,
+      "2881": 1,
+      "2544": 1,
+      "2634": 1,
+      "648": 1,
+      "994": 1,
+      "737": 1,
+      "3064": 1,
+      "707": 1,
+      "985": 2,
+      "834": 1,
+      "1018": 1,
+      "719": 1,
+      "1454": 1,
+      "273": 1,
+      "1571": 1,
+      "1084": 1,
+      "299": 1,
+      "412": 1,
+      "381": 1,
+      "643": 1,
+      "2651": 1,
+      "804": 1,
+      "1251": 1,
+      "2867": 1,
+      "406": 1,
+      "1066": 1,
+      "1212": 1,
+      "637": 1,
+      "1246": 1,
+      "1936": 1,
+      "351": 1,
+      "373": 1,
+      "380": 1,
+      "799": 1,
+      "2449": 1,
+      "1022": 1,
+      "1322": 1,
+      "1665": 1,
+      "2125": 1,
+      "428": 1,
+      "1868": 1,
+      "805": 1,
+      "929": 2,
+      "413": 1,
+      "448": 1,
+      "747": 1,
+      "572": 2,
+      "583": 1,
+      "745": 1,
+      "342": 1,
+      "383": 1,
+      "681": 1,
+      "228": 1,
+      "2546": 1,
+      "650": 1,
+      "1788": 1,
+      "1279": 1,
+      "1416": 1,
+      "974": 1,
+      "1005": 1,
+      "498": 1,
+      "739": 1,
+      "1333": 1,
+      "495": 1,
+      "2522": 1,
+      "2927": 1,
+      "2720": 1,
+      "702": 1,
+      "1090": 1,
+      "1057": 1,
+      "1587": 1,
+      "1100": 1,
+      "430": 1,
+      "2321": 1,
+      "2791": 1,
+      "2949": 1,
+      "2801": 1,
+      "718": 1,
+      "2218": 1,
+      "2487": 1,
+      "1681": 1,
+      "508": 1,
+      "1398": 1,
+      "943": 1,
+      "2390": 1,
+      "1076": 1,
+      "863": 1,
+      "367": 1,
+      "686": 1,
+      "959": 1,
+      "995": 1,
+      "2227": 1,
+      "1437": 1,
+      "2332": 1,
+      "2411": 1,
+      "1670": 1,
+      "1079": 1,
+      "811": 1,
+      "1182": 1,
+      "657": 1,
+      "1653": 1,
+      "2146": 1,
+      "3009": 1,
+      "502": 1,
+      "860": 2,
+      "2057": 1,
+      "653": 1,
+      "1906": 1,
+      "699": 1,
+      "1977": 1,
+      "1638": 1,
+      "659": 1,
+      "499": 1,
+      "1894": 1,
+      "1952": 1,
+      "1358": 1,
+      "836": 1,
+      "1823": 1,
+      "2247": 1,
+      "1724": 1,
+      "609": 1,
+      "1469": 1,
+      "663": 1,
+      "2493": 1,
+      "672": 1,
+      "2793": 1,
+      "2575": 1,
+      "2202": 1,
+      "1170": 1,
+      "979": 1,
+      "1331": 1,
+      "1874": 1,
+      "1816": 1,
+      "604": 1,
+      "2393": 1,
+      "667": 1,
+      "1946": 1,
+      "1989": 1,
+      "543": 1,
+      "1900": 1,
+      "1768": 1,
+      "1805": 1,
+      "1678": 1,
+      "596": 1,
+      "1181": 1,
+      "608": 1,
+      "772": 1,
+      "1191": 1,
+      "1257": 1,
+      "837": 1,
+      "481": 1,
+      "680": 1,
+      "1209": 1,
+      "535": 1,
+      "646": 1
+    },
+    "calls_at_3072_output_token_cap": 82,
+    "gpu_vram_nonzero_records": 0,
+    "review_json_validity_counts": {
+      "False": 6,
+      "True": 94
+    },
+    "raw_review_parse_fallbacks_by_arm": {
+      "B": 1,
+      "C": 5
+    },
+    "fallback_reviews_defaulted_to_pass_by_arm": {
+      "B": 1,
+      "C": 5
+    },
+    "fallback_pass_with_empty_issue_description_by_arm": {
+      "C": 5
+    },
+    "code_syntax_validity_counts": {
+      "True": 168,
+      "False": 7
+    },
+    "records_with_finish_or_stop_reason": 0,
+    "records_without_finish_or_stop_reason": 275
+  },
+  "known_interpretation_limits": [
+    "This is a re-analysis of saved outputs; it does not rerun LLM generation or CWEval Docker tests.",
+    "CWEval res_all arrays contain results for candidates that reached its test-result aggregation; telemetry is used to reconcile A2 syntax-valid counts.",
+    "Provider-reported finish_reason/stop_reason is absent from the current checkpoint schema, so outputs capped at 3072 tokens cannot be conclusively classified as truncated.",
+    "GPU utilization and dual-T4 GPU-hours are not inferred from generation wall time; zero measured GPU VRAM in checkpoints is reported as such.",
+    "The two so-called manual security overrides are not applied: the pinned upstream CWEval runner collects marker-tagged tests and excludes names matching _unsafe; the candidate security cases are marked on the ordinary parametrized tests, while the *_unsafe_security helper functions are not candidate score oracles.",
+    "Call-count matching (four logical model calls per A2/B/C task path, with a shared A1 draft in B/C) is not identical to compute matching: input/output token volumes, model roles, generated reasoning and wall-clock latency differ.",
+    "No primary outcome is documented in the manuscript version inspected. Pairwise tests are Holm-adjusted across 12 tests; omnibus tests are also adjusted across the three outcomes, with a combined 15-test sensitivity family reported separately.",
+    "The checkpoint audit can only verify exact model fallback counts if all checkpoint JSON files are present locally; canonical_model is the recorded model identifier actually placed in the request payload."
+  ]
+}
