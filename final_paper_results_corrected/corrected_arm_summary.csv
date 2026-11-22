@@ -1,0 +1,7 @@
+﻿arm,tasks_denominator,evaluation_coverage_n,missing_evaluation_n,functional_pass_n,functional_rate_pct,functional_wilson95_low_pct,functional_wilson95_high_pct,secure_pass_n,secure_rate_pct,secure_wilson95_low_pct,secure_wilson95_high_pct,func_secure_pass_n,func_secure_rate_pct,func_secure_wilson95_low_pct,func_secure_wilson95_high_pct
+A1,25,25,0,13,52.0,33.5,69.97,10,40.0,23.4,59.26,9,36.0,20.25,55.48
+A2_Index0,25,24,1,16,64.0,44.52,79.75,12,48.0,30.03,66.5,12,48.0,30.03,66.5
+A2_SyntaxSelected,25,25,0,16,64.0,44.52,79.75,13,52.0,33.5,69.97,12,48.0,30.03,66.5
+A2_Pass4,25,25,0,18,72.0,52.42,85.72,16,64.0,44.52,79.75,14,56.0,37.07,73.33
+B,25,24,1,14,56.0,37.07,73.33,16,64.0,44.52,79.75,14,56.0,37.07,73.33
+C,25,24,1,9,36.0,20.25,55.48,8,32.0,17.21,51.59,6,24.0,11.5,43.43
